@@ -4,8 +4,6 @@ from .models import Movies, Genre
 # Create your views here.
 def tmdbdata(request):
     BASE_API = 'https://api.themoviedb.org/3/movie/top_rated'
-    models = ['title','release_date','popularity',
-    'vote_count','vote_average','overview','poster_path','genre_ids']
     g= {
         28 : '액션',
         12 : '모험',
@@ -28,7 +26,7 @@ def tmdbdata(request):
         36 : '역사',
     }
 
-    for genre_name in g.values():
+    for genre_name in g.values(): # Genre 인스턴스 만들기 
         gerne_instance = Genre()
         gerne_instance.name = genre_name
         gerne_instance.save()
@@ -47,12 +45,9 @@ def tmdbdata(request):
         res = requests.get(BASE_API,params=params).json()
         results = res['results']
         for j in range(20):
-            
             movie_instance = Movies() # 나중에 저장 
             genres = []
             genres = [g[id] for id in results[j]["genre_ids"]]
-            # print(genres)
-            # print(genres)
             poster_path = url + results[j]["poster_path"]       
             movie_instance.title = results[j]["title"]
             movie_instance.release_date = results[j]["release_date"]
@@ -61,7 +56,6 @@ def tmdbdata(request):
             movie_instance.vote_average = results[j]["vote_average"]
             movie_instance.overview = results[j]["overview"]
             movie_instance.poster_path = poster_path
-            # movie_instance.genres = genres
             movie_instance.save()
             
             # 중계 테이블
