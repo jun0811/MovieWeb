@@ -21,7 +21,7 @@ def signup(request):
             # user = form.save()
             # auth
             form.save()
-            return redirect('accounts:signup')  # 수정 필요
+            return redirect('community:index')  # 수정 필요
     else:
         form = CustomUserCrationForm()
     context = {
@@ -38,7 +38,7 @@ def login(request):
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect(request.GET.get('next') or 'accounts:login') # or 'movies:index'로 수정 필요
+            return redirect(request.GET.get('next') or 'community:index') # or 'movies:index'로 수정 필요
     else:
         form = AuthenticationForm()
     context = {

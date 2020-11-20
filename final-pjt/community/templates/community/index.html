@@ -10,7 +10,7 @@
     <p>글 번호 : {{review.pk}}</p>
     <p>글 제목 : {{review.title}}</p>
     <p>글 내용 : {{review.content}}</p>
-    <a href="">[detial]</a>
+    <a href="{%url 'community:detail' review.pk%}">[detail]</a>
     <hr>
   {% endfor %}
 {% endblock  %}

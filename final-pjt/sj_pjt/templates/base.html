@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="container">
-    {% comment %} <h3>Hello, {{ user.username }}</h3>
+    <h3>Hello, {{ user.username }}</h3>
     {% if request.user.is_authenticated %}
       <a href="{% url 'accounts:update' %}">정보수정</a>
       <form action="{% url 'accounts:logout' %}" method="POST">
@@ -22,7 +22,7 @@
     {% else %}
       <a href="{% url 'accounts:signup' %}">Signup</a>
       <a href="{% url 'accounts:login' %}">Login</a>
-    {% endif %} {% endcomment %}
+    {% endif %}
     
     {% block content %}
     {% endblock %}

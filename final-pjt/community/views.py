@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Review
+from .models import Review,Comment
 from django.views.decorators.http import require_http_methods,require_POST
 from .forms import ReviewForm, CommentForm
 # Create your views here.
@@ -33,12 +33,12 @@ def create(request):
 
 def detail(request, pk):
     review = get_object_or_404(Review, pk=pk)
-    # comment_form = CommentForm()
-    # comments = article.comment_set.all()
+    comment_form = CommentForm()
+    comments = review.comment_set.all()
     context = {
         'review': review,
-        # 'comment_form': comment_form,
-        # 'comments': comments,
+        'comment_form': comment_form,
+        'comments': comments,
     }
     return render(request, 'community/detail.html', context)
 
@@ -48,14 +48,13 @@ def detail(request, pk):
 def update(request, pk):
     review = get_object_or_404(Review, pk=pk)
     # 수정하는 유저와, 게시글 작성 유저가 같은지 
-    # if request.user == article.user:
     if request.method == 'POST':
-        form = ArticleForm(request.POST, instance=article)
+        form = ReviewForm(request.POST, instance=review)
         if form.is_valid():
             form.save()
-            return redirect('articles:detail', article.pk)
+            return redirect('community:detail', review.pk)
     else:
-        form = ArticleForm(instance=article)
+        form = ReviewForm(instance=review)
     # else:
     #     return redirect('articles:index') # request.user와 한묶음
     context = {
@@ -67,9 +66,38 @@ def update(request, pk):
 
 @require_POST
 def delete(request, pk):
-    # if request.user.is_authenticated:
-    review = get_object_or_404(Review, pk=pk)
-    # if request.user == article.user:
-    review.delete()
-    return redirect('community:index')
-    # return redirect('articles:detail', article.pk)
+    if request.user.is_authenticated:
+        review = get_object_or_404(Review, pk=pk)
+        if request.user == review.user:
+            review.delete()
+            return redirect('community:index')
+    return redirect('community:detail', review.pk)
+
+
+
+def comments_create(request,pk):
+    if request.user.is_authenticated:
+        review = get_object_or_404(Review,pk=pk)
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.review = review
+            comment.user = request.user
+            comment.save()
+            print('&&&&',review.pk)
+            return redirect('community:detail', review.pk)
+        context = {
+            'comment_form' : comment_form,
+            'review':review,
+        }            
+        return render(request, 'community/detail.html',context)
+    return redirect('accounts:login')
+
+
+
+def comments_delete(request, review_pk, comment_pk):
+    if request.user.is_authenticated:
+        comment = get_object_or_404(Comment, pk = comment_pk)
+        if request.user == comment.user:
+            comment.delete()
+    return redirect('community:detail', review_pk)
