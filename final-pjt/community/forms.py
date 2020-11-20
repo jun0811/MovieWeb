@@ -4,7 +4,8 @@ from .models import Review, Comment
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['title', 'content']
+        fields = '__all__'
+        # fields = ['title', 'content']
 
 class CommentForm(forms.ModelForm):
 
