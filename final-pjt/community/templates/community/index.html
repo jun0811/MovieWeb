@@ -2,4 +2,15 @@
 
 {% block content %}
   <h1>index</h1>
+  <a href="{%url 'community:create'%}">[create]</a>
+
+  <hr>
+  {% for review in reviews %}
+    {% comment %} <p><b>작성자 : {{review.user}}</b></p> {% endcomment %}
+    <p>글 번호 : {{review.pk}}</p>
+    <p>글 제목 : {{review.title}}</p>
+    <p>글 내용 : {{review.content}}</p>
+    <a href="{%url 'community:detail' review.pk%}">[detail]</a>
+    <hr>
+  {% endfor %}
 {% endblock  %}

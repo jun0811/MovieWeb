@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="text-center">UPDATE</h1>
+  <form action="" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+     {% comment %} <p>
+    글 제목  : {{ form.title}}
+    </p>
+    <p>
+    글 내용 : {{ form.content}}
+    </p>  {% endcomment %}
+    <input type="submit"> 
+  </form>
+  <hr>
+  <a href="{% url 'community:detail' review.pk %}">[back]</a>
+{% endblock %}

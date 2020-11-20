@@ -1,0 +1,17 @@
+{% extends 'base.html' %}>
+
+{% block content %}
+  <h2>create</h2>
+  <form action="" method ="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    {% comment %} <p>
+    글 제목  : {{ form.title}}
+    </p>
+    <p>
+    글 내용 : {{ form.content}}
+    </p> {% endcomment %}
+    <input type="submit">
+  </form>
+
+{% endblock  %}
