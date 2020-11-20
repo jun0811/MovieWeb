@@ -1,5 +1,5 @@
-from django.shortcuts import render
 import requests
+from django.shortcuts import render
 from .models import Movies, Genre
 # Create your views here.
 def tmdbdata(request):
@@ -66,8 +66,12 @@ def tmdbdata(request):
 
 
 def index(request):
-    movies = Movies.objects.all()
+    movies = Movies.objects.order_by("?")[0:10]
+    # first = Movies.objects.order_by("?")[0]
+    # print(movies, firstMovie)
+    print(movies[0])
     context = {
+        'first': movies[0],
         'movies': movies,
     }
     return render(request, 'movies/index.html', context)
