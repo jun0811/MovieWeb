@@ -13,15 +13,14 @@ from .forms import CustomUserCrationForm, CustomUserChangeForm
 # Create your views here.
 require_http_methods(['GET', 'POST'])
 def signup(request):
-    # if request.user.is_authenticated:
-    #     return redirect('')
+    if request.user.is_authenticated:
+        return redirect('movies:index')
     if request.method == 'POST':
         form = CustomUserCrationForm(request.POST)
         if form.is_valid():
-            # user = form.save()
-            # auth
-            form.save()
-            return redirect('community:index')  # 수정 필요
+            user = form.save()
+            auth_login(request, user)
+            return redirect('movies:index')
     else:
         form = CustomUserCrationForm()
     context = {
@@ -32,13 +31,13 @@ def signup(request):
 
 @require_http_methods(['GET', 'POST'])
 def login(request):
-    # if request.user.is_authenticated:
-    #     return redirect('')
+    if request.user.is_authenticated:
+        return redirect('movies:index')
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect(request.GET.get('next') or 'community:index') # or 'movies:index'로 수정 필요
+            return redirect(request.GET.get('next') or 'movies:index') 
     else:
         form = AuthenticationForm()
     context = {
@@ -47,10 +46,10 @@ def login(request):
     return render(request, 'accounts/login.html', context)
 
 
-# @require_POST
+@require_POST
 def logout(request):
     auth_logout(request)
-    return redirect('accounts:login')
+    return redirect('movies:index')
 
 
 @login_required
@@ -60,7 +59,7 @@ def update(request):
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('accounts:update')  # 수정 필요
+            return redirect('movies:index')  # 수정 필요(마이페이지로 redirect)
     else:
         form = CustomUserChangeForm(instance=request.user)
     context = {
@@ -73,7 +72,7 @@ def update(request):
 def delete(request):
     if request.user.is_authenticated:
         request.user.delete()
-    return redirect('accounts:signup') # 수정 필요
+    return redirect('movies:index')
 
 
 @login_required
@@ -84,7 +83,7 @@ def change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            return redirect('accounts:update') # 수정 필요
+            return redirect('movies:index') # 수정 필요(마이페이지로 redirect)
     else: 
         form = PasswordChangeForm(request.user)
     context = {
