@@ -64,3 +64,10 @@ def tmdbdata(request):
                 movie_instance.genres.add(gerne_instance)
         # for k in range(len(model)):
 
+
+def index(request):
+    movies = Movies.objects.all()
+    context = {
+        'movies': movies,
+    }
+    return render(request, 'movies/index.html', context)
