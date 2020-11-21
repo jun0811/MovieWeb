@@ -66,12 +66,13 @@ def tmdbdata(request):
 
 
 def index(request):
-    movies = Movies.objects.order_by("?")[0:10]
-    # first = Movies.objects.order_by("?")[0]
-    # print(movies, firstMovie)
-    print(movies[0])
+    movies = Movies.objects.order_by("?")[0:9]
+    first = movies[0:3]
+    second = movies[3:6]
+    third = movies[6:9]
     context = {
-        'first': movies[0],
-        'movies': movies,
+        'first': first,
+        'second': second,
+        'third': third,
     }
     return render(request, 'movies/index.html', context)
