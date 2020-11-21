@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-
+from .models import User
 from django.views.decorators.http import require_POST, require_http_methods
 
 from .forms import CustomUserCrationForm, CustomUserChangeForm
@@ -29,6 +29,7 @@ def signup(request):
     return render(request, 'accounts/signup.html', context)
 
 
+
 @require_http_methods(['GET', 'POST'])
 def login(request):
     if request.user.is_authenticated:
@@ -45,6 +46,15 @@ def login(request):
     }
     return render(request, 'accounts/login.html', context)
 
+
+@login_required
+def profile(request, username):
+    person = get_object_or_404(User, username=username)
+    context ={
+        'person' : person
+    }
+    print(person)
+    return render(request, 'accounts/profile.html',context)
 
 @require_POST
 def logout(request):

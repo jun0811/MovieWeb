@@ -3,9 +3,108 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/dacf7dcd9c.js" crossorigin="anonymous"></script>   <title>Document</title>
 </head>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap" rel="stylesheet">
+<style>
+body {
+  background-color: #222121;
+  color: white;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 2rem;
+}
+a {
+  color: white;
+  text-decoration:none;
+  padding-top: 18px;
+}
+.nav-border {
+  border-bottom: thin inset grey;
+  padding-top: 50px;
+}
+#point_color{
+  background-color: rgb(109,165,155);
+  margin-top: 1rem;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: x-large;
+  text-align: center;
+}
+.side-nav{
+  padding-left: 0rem;
+  font-size : x-large;
+  font-weight :bold;
+  font-family: sans-serif;
+  text-align: center;
+}
+</style>
 <body>
-  <h1>community</h1>
+  <nav class="nav-border navbar navbar-expand-lg mb-4">
+    <img src="data:image/png;base64,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" alt="" style="width: 50px;">
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'movies:index' %}">Home</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'community:index' %}">Community</a>
+        </li>
+      </ul>
+
+        <div class="dropdown">
+          <a class="btn dropdown-toggle " href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="https://icon-library.com/images/white-profile-icon/white-profile-icon-3.jpg" alt="" style="width: 30px;">
+          </a>
+
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+            {% if request.user.is_authenticated %}
+              <a href="{% url 'accounts:update' %}" class="mr-3 pb-0 dropdown-item">정보수정</a>
+              <form action="{% url 'accounts:logout' %}" method="POST" class="mr-3">
+                {% csrf_token %}
+                <input type="submit" value="Logout" class="dropdown-item">
+              </form>
+              <form action="{% url 'accounts:delete' %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="회원탈퇴" class="dropdown-item">
+              </form>
+            {% else %}
+              <a href="{% url 'accounts:signup' %}" class="mr-4 dropdown-item">Signup</a>
+              <a href="{% url 'accounts:login' %}" class="dropdown-item">Login</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav> 
+
+  <div class="container-fluid ">
+  <div class="row ">
+    <div class="col-md-2 ml-4 bg-white" style="height:260px;">
+      <h4 id="point_color">REVIEW</h4>
+        <ul class="side-nav">
+            <a class="text-dark" href="#">감상 후기</a>
+            <br>
+            <a class="text-dark" href="#">나의 평점 </a>
+        </ul>
+      <h4 id="point_color">NEWS</h4>
+        <ul class="side-nav">
+            <a class="text-dark" href="#">정보/소식 </a>
+            <br>
+            <a class="text-dark" href="#">예고편</a>
+        </ul>
+    </div>
+    <div class="ml-4 col-md-8 bg-dark">
+      {% block content %}
+      {% endblock  %}
+    </div>
+  </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </body>
+
 </html>

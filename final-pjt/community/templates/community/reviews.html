@@ -1,0 +1,16 @@
+{% extends 'community.html' %}
+{% block content %}
+  <h2>Reviews</h2>
+  <div class="raw bg-white text-dark">
+  <a class="text-dark"href="{%url 'community:create'%}">글쓰기</a>
+  <hr>
+  {% for review in reviews %}
+    {% comment %} <p><b>작성자 : {{review.user}}</b></p> {% endcomment %}
+    <p>글 번호 : {{review.pk}}</p>
+    <p>글 제목 : {{review.title}}</p>
+    <p>글 내용 : {{review.content}}</p>
+    <a href="{%url 'community:detail' review.pk%}">[detail]</a>
+    <hr>
+  {% endfor %}
+  </div>
+{% endblock content %}
