@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-
 {% block content %}
+<!-- 
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
   <div class="carousel-item active">
@@ -19,5 +19,47 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
-</div>
+</div>-->
+<div class="row">
+		<div class="col-md-12 bg-dark">
+      <div id="Carousel" class="carousel slide">
+        <ol class="carousel-indicators">
+            <li data-target="#Carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#Carousel" data-slide-to="1"></li>
+            <li data-target="#Carousel" data-slide-to="2"></li>
+        </ol>
+        <!-- Carousel items -->
+        <div class="carousel-inner">
+
+        <div class="carousel-item active">
+          <div class="row mt-3">
+          {% for f in first %}
+            <div class="col-md-4"><a href="#"><img src="{{f.poster_path}}" alt="Image" style="max-width:100%; height: 480px;"></a></div>
+          {% endfor %}
+          </div><!--.row-->
+        </div><!--.item-->
+          
+        <div class="carousel-item">
+          <div class="row mt-3">
+            {% for s in second %}
+            <div class="col-md-4"><a href="#"><img src="{{s.poster_path}}" alt="Image" style="max-width:100%; height: 480px;"></a></div>
+          {% endfor %}
+          </div><!--.row-->
+        </div><!--.item-->
+          
+        <div class="carousel-item">
+          <div class="row mt-3">
+            {% for t in third %}
+            <div class="col-md-4"><a href="#"><img src="{{t.poster_path}}" alt="Image" style="max-width:100%;height: 480px;"></a></div>
+          {% endfor %}
+          </div><!--.row-->
+        </div><!--.item-->
+          
+        </div><!--.carousel-inner-->
+          <a data-slide="prev" href="#Carousel" class="left carousel-control">‹</a>
+          <a data-slide="next" href="#Carousel" class="right carousel-control">›</a>
+        </div><!--.Carousel-->
+                 
+		</div>
+	</div>
 {% endblock content %}
