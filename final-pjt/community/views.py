@@ -4,11 +4,20 @@ from django.views.decorators.http import require_http_methods,require_POST
 from .forms import ReviewForm, CommentForm
 # Create your views here.
 def index(request):
-    reviews = Review.objects.all()
+    reviews = Review.objects.order_by('-pk')[0:5]
     context = {
         "reviews" : reviews
     }
     return render(request, 'community/index.html',context)
+
+
+def reviews(request):
+    reviews = Review.objects.all()
+    context = {
+        "reviews" : reviews
+    }
+    return render(request, 'community/reviews.html',context)
+
 
 # @login_required
 @require_http_methods(['GET', 'POST'])

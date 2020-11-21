@@ -1,16 +1,33 @@
-{% extends 'base.html' %}
+{% extends 'community.html' %}
 
 {% block content %}
-  <h1>index</h1>
-  <a href="{%url 'community:create'%}">[create]</a>
+  <div class ="d-flex raw">
+    <div class=" col-md-6">
+      <div class="raw my-3 text-dark">
+        <div class = "News bg-white mb-2 " style="height: 300px"> 
+          <h3 class="mt-1">News</h3>
+        </div>
+        <div class = "like_movie  bg-white " style="height: 300px">
+          <h3 class="mt-1">누군가 좋아하는 영화</h3>
+        </div>
+      </div>
+    </div>
+    <!-- -->
+    <div class=" col-md-6 bg-white my-3">
+      <h3 class="text-dark mt-1">Reviews 
+      <a class="text-dark" href="{% url 'community:reviews' %}">
+        <i class="far fa-plus-square"></i>
+      </a>
+      </h3>
+      <hr>
+        {% for review in reviews %}
+          <a class="text-dark" href="{%url 'community:detail' review.pk%}"><p>글 제목 : {{review.title}}</p></a>
+          <hr>
+        {% endfor %}
+    </div>
+  </div>
+  </div>
+  
+  
 
-  <hr>
-  {% for review in reviews %}
-    {% comment %} <p><b>작성자 : {{review.user}}</b></p> {% endcomment %}
-    <p>글 번호 : {{review.pk}}</p>
-    <p>글 제목 : {{review.title}}</p>
-    <p>글 내용 : {{review.content}}</p>
-    <a href="{%url 'community:detail' review.pk%}">[detail]</a>
-    <hr>
-  {% endfor %}
 {% endblock  %}
