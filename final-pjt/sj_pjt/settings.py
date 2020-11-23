@@ -124,3 +124,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+YOUTUBE_API_KEY='AIzaSyCk52y-NA-4W_DOohpl_M56NLv-f1aqQUs'
