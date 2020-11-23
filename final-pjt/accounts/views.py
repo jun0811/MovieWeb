@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .models import User
 from django.views.decorators.http import require_POST, require_http_methods
-
+# from ..movies.models import Genre
 from .forms import CustomUserCrationForm, CustomUserChangeForm
 
 # Create your views here.
@@ -50,11 +50,32 @@ def login(request):
 @login_required
 def profile(request, username):
     person = get_object_or_404(User, username=username)
-    
-    context ={
-        'person': person
+    # print(person)
+    like_movies = []
+    like_genres = []
+
+    genres ={ 
+        '액션' : 0,'모험' : 0,'판타지': 0,'공상과학': 0,'애니메이션': 0,
+        '음악': 0, 'TV' : 0, '다큐': 0, '드라마':0, '가족': 0,'코미디' : 0,
+        '로맨스': 0, '스릴러': 0, '공포': 0, '미스터리': 0, '범죄': 0,
+        '전쟁':0,'서부':0,'역사':0
+
     }
-    # print(person[0])
+    # 장르 딕셔너리를 미리 만들어서 카운트....한다음에 TOP3개만 담는다.
+    
+    for movie in person.like_movies.all():
+        like_movies.append(movie)
+        for genre in movie.genres.all():
+            genres[genre.name] +=1
+    top_3 = sorted(genres.items(), reverse=True, key= lambda x : x[1])[:3] # 선호도 가장 높은 3개
+    for i in range(3):
+        like_genres.append(top_3[i][0])
+    # print(like_genres)
+    context ={
+        'person': person,
+        'like_movies': like_movies,
+        "like_genres" : like_genres,
+    }
     return render(request, 'accounts/profile.html', context)
 
 

@@ -1,4 +1,6 @@
 import requests
+from django.views.decorators.http import require_http_methods, require_POST
+
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from .models import Movies, Genre
@@ -80,7 +82,7 @@ def index(request):
     }
     return render(request, 'movies/index.html', context)
 
-
+@require_POST
 def like(request,pk):
     if request.user.is_authenticated:
         movie = get_object_or_404(Movies, pk=pk)
