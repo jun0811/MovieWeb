@@ -2,5 +2,17 @@
 
 {% block content %}
   <div>user | {{ person.username }}</div> 
-  <div>좋아하는 영화 | {{ person.like_movies }}</div> 
+  <div><span>좋아하는 영화 |</span> 
+    {% for movie in person.like_movies.all %}
+      <div>{{movie.title}}</div>
+    {% endfor %}
+
+  <div><span>선호하는 장르|</span>
+  </div>
+    {% for movie in person.like_movies.all %}
+      {% for genre in movie.genres.all %}
+      <div>{{genre}}</div>
+      {% endfor %}
+    {% endfor %}
+  </div>
 {% endblock  %}
