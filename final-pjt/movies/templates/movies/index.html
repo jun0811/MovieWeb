@@ -22,6 +22,12 @@
 </div>-->
 <div class="row">
 		<div class="col-md-12 bg-dark">
+      <div class="d-flex justify-content-between">
+        <div class="pt-3">Top Rated</div>
+        <a href="{% url 'movies:topratedlist' %}">
+          <i class="far fa-plus-square"></i>
+        </a>
+      </div>
       <div id="Carousel" class="carousel slide">
         <ol class="carousel-indicators">
             <li data-target="#Carousel" data-slide-to="0" class="active"></li>
@@ -48,7 +54,7 @@
                   </button>
                 {% endif %}
               </form>
-              <span id ="like_count-{{f.pk}}">{{ f.like_users.all|length }} </span>명이 이 영화를 좋아합니다.
+              <span id ="like_count-{{f.pk}}">{{ f.like_users.all|length }} </span>
             </div>
           {% endfor %}
           </div><!--.row-->
@@ -71,7 +77,7 @@
                   </button>
                 {% endif %}
               </form>
-              <span id ="like_count-{{s.pk}}">{{ s.like_users.all|length }} </span>명이 이 영화를 좋아합니다.
+              <span id ="like_count-{{s.pk}}">{{ s.like_users.all|length }} </span>
             </div>
           {% endfor %}
           </div><!--.row-->
@@ -93,7 +99,7 @@
                   </button>
                 {% endif %}
               </form>
-              <span id ="like_count-{{t.pk}}">{{ t.like_users.all|length }} </span>명이 이 영화를 좋아합니다.
+              <span id ="like_count-{{t.pk}}">{{ t.like_users.all|length }} </span>
             
             </div>
           {% endfor %}

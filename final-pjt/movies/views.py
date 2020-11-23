@@ -1,7 +1,7 @@
 import requests
 from django.views.decorators.http import require_http_methods, require_POST
 from django.conf import settings
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from .models import Movies, Genre
 # Create your views here.
@@ -148,14 +148,19 @@ def youtube(title):
 
 def detail(request, movie_pk):
     movie = get_object_or_404(Movies, pk=movie_pk)
-    # print(movie.title)
+    genres = movie.genres.all().values()
     trailer = youtube(movie.title)
-    # print(trailer)
-    # print(type(trailer))
     context = {
         'movie': movie,
+        'genres': genres,
         'trailer': trailer['items'][0]['id']['videoId']
     }
     return render(request, 'movies/detail.html', context)
 
 
+def topratedlist(request):
+    movies = Movies.objects.all()
+    context = {
+        'movies': movies,
+    }
+    return render(request, 'movies/topratedlist.html', context)
