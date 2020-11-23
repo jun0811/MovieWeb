@@ -21,6 +21,9 @@
       <h3>{{ movie.overview }}</h3>
       <br>
       <h3>장르</h3>
+			{% for genre in genres %}
+			<h5>{{ genre.name }}</h5>
+			{% endfor %}
 		</div>
 	</div>
 </div>
