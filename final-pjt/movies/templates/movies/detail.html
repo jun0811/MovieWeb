@@ -21,8 +21,34 @@
       <h3>{{ movie.overview }}</h3>
       <br>
       <h3>장르</h3>
-
 		</div>
 	</div>
 </div>
+	<div class="raw">
+		<div class= "col-6" id="player">
+		<iframe src="https://www.youtube.com/embed/{{trailer}}" frameborder="0"
+		allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+		allowfullscreen	
+		></iframe>
+		</div>
+	</div>
 {% endblock content %}
+
+{% block script %}
+	<script>
+
+	</script>
+	<style>
+	.player {
+  position: relative;
+  padding-top: 56.25%;
+}
+
+.player > iframe {
+  position: absolute;
+  top: 0;
+  width: 500px;
+  height: 100%;
+}
+	</style>
+{% endblock  %}
