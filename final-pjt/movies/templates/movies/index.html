@@ -107,6 +107,20 @@
                  
 		</div>
 	</div>
+  <br>
+  <hr>
+  {% if request.user.is_authenticated %}
+    <div class="recommand_movies">
+      {% if recommand %}
+      <h2>{{request.user}}님에게 추천하는 영화</h2>
+      {% for movie in recommand %}
+        <a href="{% url 'movies:detail' movie.pk %}"><img src="{{movie.poster_path}}" alt="Image" style="max-width:100%; height: 480px;"></a>
+      {% endfor %}
+      {% else %}
+        <div>영화에 좋아요를 눌러주시면 영화를 추천해드립니다</div>
+      {% endif %}
+    </div>
+  {% endif %}
 {% endblock content %}
 
 {% block script %}
