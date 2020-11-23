@@ -1,5 +1,6 @@
 import requests
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
 from .models import Movies, Genre
 # Create your views here.
 def tmdbdata(request):
@@ -76,3 +77,9 @@ def index(request):
         'third': third,
     }
     return render(request, 'movies/index.html', context)
+
+
+def like(request, movie_id):
+    if request.user.is_authenticated:
+        article = get_object_or_404(Movies, id=movie_id)
+        pass

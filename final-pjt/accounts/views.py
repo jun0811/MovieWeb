@@ -51,10 +51,11 @@ def login(request):
 def profile(request, username):
     person = get_object_or_404(User, username=username)
     context ={
-        'person' : person
+        'person': person
     }
     print(person)
-    return render(request, 'accounts/profile.html',context)
+    return render(request, 'accounts/profile.html', context)
+
 
 @require_POST
 def logout(request):
