@@ -81,7 +81,19 @@ def index(request):
     return render(request, 'movies/index.html', context)
 
 
-def like(request, movie_id):
+def like(request,pk):
     if request.user.is_authenticated:
-        article = get_object_or_404(Movies, id=movie_id)
-        pass
+        movie = get_object_or_404(Movies, pk=pk)
+        user = request.user
+        if movie.like_users.filter(pk=user.pk).exists():
+            movie.like_users.remove(user)
+            is_like=False
+        else:
+            movie.like_users.add(user)
+            is_like=True
+        data = {
+            'is_like' : is_like,
+            'like_count' : movie.like_users.count()
+        }
+        return JsonResponse(data)
+    return redirect('accounts:login')
