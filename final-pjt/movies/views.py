@@ -56,6 +56,7 @@ def tmdbdata(request):
             movie_instance.vote_count = results[j]["vote_count"]
             movie_instance.vote_average = results[j]["vote_average"]
             movie_instance.overview = results[j]["overview"]
+            movie_instance.movie_id = results[j]["id"]
             movie_instance.poster_path = poster_path
             movie_instance.save()
             
@@ -68,6 +69,7 @@ def tmdbdata(request):
 
 def index(request):
     movies = Movies.objects.order_by("?")[0:9]
+    # print(movies)
     first = movies[0:3]
     second = movies[3:6]
     third = movies[6:9]
