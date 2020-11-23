@@ -70,15 +70,45 @@ def tmdbdata(request):
 
 
 def index(request):
+    # movie Carousel 
     movies = Movies.objects.order_by("?")[0:9]
-    # print(movies)
     first = movies[0:3]
     second = movies[3:6]
     third = movies[6:9]
+    # user 정보 
+    genres ={ 
+        '1' : 0,'2' : 0,'3': 0,'4': 0,'5': 0,
+        '6': 0, '7' : 0, '8': 0, '9':0, '10': 0,'11' : 0,
+        '12': 0, '13': 0, '14': 0, '15': 0, '16': 0,
+        '17':0,'18':0,'19':0
+    } #장르 테이블에 맞추어서 딕셔너리 구성 
+    like_genres = []
+    recommand = []
+    if request.user.is_authenticated:
+        user = request.user
+        # print(Movies.objects.all())
+        for movie in user.like_movies.all():
+            for genre in movie.genres.all():
+                # print(genre.id)
+                genres[str(genre.id)] +=1
+        top_2 = sorted(genres.items(), reverse=True, key= lambda x : x[1])[:2] # 선호도 가장 높은 3개
+        if top_2[0][1] != 0:
+            for i in range(2):
+                like_genres.append(top_2[i][0])
+            for movie in Movies.objects.order_by('-popularity'):
+                
+                for genre in movie.genres.all():
+                    # print(genre.id)  
+                    if (str(genre.id) in like_genres) and movie not in recommand:
+                        recommand.append(movie)
+            recommand = recommand[:3]
+    # recommand = list(set(recommand))[:3]
+
     context = {
         'first': first,
         'second': second,
         'third': third,
+        'recommand': recommand
     }
     return render(request, 'movies/index.html', context)
 
