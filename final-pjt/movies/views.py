@@ -99,3 +99,11 @@ def like(request,pk):
         }
         return JsonResponse(data)
     return redirect('accounts:login')
+
+
+def detail(request, movie_pk):
+    movie = get_object_or_404(Movies, pk=movie_pk)
+    context = {
+        'movie': movie,
+    }
+    return render(request, 'movies/detail.html', context)

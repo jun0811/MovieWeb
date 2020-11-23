@@ -35,7 +35,7 @@
           <div class="row mt-3">
           {% for f in first %}
             <div class="col-md-4">
-              <a href="#"><img src="{{f.poster_path}}" alt="Image" style="max-width:100%; height: 480px;"></a>
+              <a href="{% url 'movies:detail' f.pk %}"><img src="{{f.poster_path}}" alt="Image" style="max-width:100%; height: 480px;"></a>
               <form action="{%url 'movies:like' f.pk%}" data-articleId= "{{f.pk}}" id = "form_like" method="POST" class="d-inline">
                 {% csrf_token %}
                 {% if user in f.like_users.all %}
@@ -58,7 +58,7 @@
           <div class="row mt-3">
             {% for s in second %}
             <div class="col-md-4">
-              <a href=""><img src="{{s.poster_path}}" alt="Image" style="max-width:100%; height: 480px;"></a>
+              <a href="{% url 'movies:detail' s.pk %}"><img src="{{s.poster_path}}" alt="Image" style="max-width:100%; height: 480px;"></a>
               <form action="{%url 'movies:like' s.pk%}" data-articleId= "{{s.pk}}" id = "form_like" method="POST" class="d-inline">
                 {% csrf_token %}
                 {% if user in s.like_users.all %}
@@ -80,7 +80,7 @@
         <div class="carousel-item">
           <div class="row mt-3">
             {% for t in third %}
-              <div class="col-md-4"><a href="#"><img src="{{t.poster_path}}" alt="Image" style="max-width:100%;height: 480px;"></a>
+              <div class="col-md-4"><a href="{% url 'movies:detail' t.pk %}"><img src="{{t.poster_path}}" alt="Image" style="max-width:100%;height: 480px;"></a>
               <form action="{%url 'movies:like' t.pk%}" data-articleId= "{{t.pk}}" id = "form_like" method="POST" class="d-inline">
                 {% csrf_token %}
                 {% if user in t.like_users.all %}
