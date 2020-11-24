@@ -1,40 +1,57 @@
 {% extends 'base.html' %}
 
+{% block style %}
+.genre {
+	font-size: 60%;
+}
+.section {
+	height: 750px;
+	width: 100%;
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url({{ movie.poster_path }});
+	background-size: cover;
+	background-position: center;
+}
+.img {
+	height: 450px;
+	margin-top: 150px;
+}
+.title {
+	font-size: 200%;
+	margin-top: 150px;
+}
+{% endblock style %}
+
 {% block content %}
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12 mt-3">
-			<h3>
-				<h1>영화 상세 정보</h1>
-			</h3>
-		</div>
-	</div>
+<section class="section">
+    
+<div class="container">
 	<div class="row">
 		<div class="col-md-6 mt-3">
-			<img alt="Bootstrap Image Preview" src="{{ movie.poster_path }}"/>
+			<img alt="Bootstrap Image Preview" class="img" src="{{ movie.poster_path }}"/>
 		</div>
 		<div class="col-md-6">
-			<h1>제목</h1>
-      <h3>{{ movie.title }}</h3>
+			
+      <h1 class="title">{{ movie.title }}</h1>
       <br>
       <h1>줄거리</h1>
       <h3>{{ movie.overview }}</h3>
       <br>
       <h3>장르</h3>
 			{% for genre in genres %}
-			<h5>{{ genre.name }}</h5>
+			<span class="genre">{{ genre.name }}</span>
 			{% endfor %}
 		</div>
 	</div>
 </div>
-	<div class="raw">
+	<div class="row">
 		<div class= "col-6" id="player">
-		<iframe src="https://www.youtube.com/embed/{{trailer}}" frameborder="0"
+		{% comment %} <iframe src="https://www.youtube.com/embed/{{trailer}}" frameborder="0"
 		allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 		allowfullscreen	
-		></iframe>
+		></iframe> {% endcomment %}
 		</div>
 	</div>
+	</section>
 {% endblock content %}
 
 {% block script %}

@@ -149,11 +149,11 @@ def youtube(title):
 def detail(request, movie_pk):
     movie = get_object_or_404(Movies, pk=movie_pk)
     genres = movie.genres.all().values()
-    trailer = youtube(movie.title)
+    # trailer = youtube(movie.title)
     context = {
         'movie': movie,
         'genres': genres,
-        'trailer': trailer['items'][0]['id']['videoId']
+        # 'trailer': trailer['items'][0]['id']['videoId'],
     }
     return render(request, 'movies/detail.html', context)
 
