@@ -1,23 +1,34 @@
 {% extends 'base.html' %}
 
 {% block style %}
-.genre {
-	font-size: 60%;
-}
 .section {
-	height: 750px;
+	height: 100%;
 	width: 100%;
-	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url({{ movie.poster_path }});
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url({{ movie.poster_path }});
 	background-size: cover;
 	background-position: center;
 }
 .img {
-	height: 450px;
+	height: 500px;
 	margin-top: 150px;
 }
 .title {
 	font-size: 200%;
 	margin-top: 150px;
+	white-space: nowrap;
+}
+.font-size-half {
+	font-size: 50%;
+}
+.like-button {
+	width: 70px;
+	height: 40px;
+	border-color: white;
+	color: white;
+}
+.like-button:hover {
+  background: grey; 
+  color: white;
 }
 {% endblock style %}
 
@@ -30,45 +41,115 @@
 			<img alt="Bootstrap Image Preview" class="img" src="{{ movie.poster_path }}"/>
 		</div>
 		<div class="col-md-6">
-			
-      <h1 class="title">{{ movie.title }}</h1>
-      <br>
-      <h1>줄거리</h1>
-      <h3>{{ movie.overview }}</h3>
-      <br>
-      <h3>장르</h3>
+      <h1 class="title mb-0">{{ movie.title }}</h1>
+			<form action="{%url 'movies:like' movie.pk%}" data-articleId= "{{ movie.pk }}" id = "form_like" method="POST" class="d-inline">
+				{% csrf_token %}
+				{% if user in movie.like_users.all %}
+					<button class="btn btn-link p-0 like-button">
+						<i class="fas fa-heart fa-lg heart-{{ movie.pk }} mr-1" style="color:crimson;"></i>
+						<span id ="like_count-{{ movie.pk }}">{{ movie.like_users.all|length }} </span>
+					</button>
+				{% else %}
+					<button class="btn btn-link p-0 like-button">
+						<i class="fas fa-heart fa-lg heart-{{ movie.pk }} mr-1" style="color:white;"></i>
+						<span id ="like_count-{{ movie.pk }}">{{ movie.like_users.all|length }} </span>
+					</button>
+				{% endif %}
+			</form>
+			<br>
+			<br>
+			<div class="font-size-half">개봉일</div>
+			<div>{{ movie.release_date }}</div>
+			<br>
+			<div class="font-size-half">인기도</div>
+			<div>{{ movie.popularity }}</div>
+			<br>
+			<div class="font-size-half">장르</div>
 			{% for genre in genres %}
-			<span class="genre">{{ genre.name }}</span>
+			<span class="">|{{ genre.name }}|</span>
+
 			{% endfor %}
 		</div>
 	</div>
-</div>
+	<br>
+	<!-- 줄거리 -->	
 	<div class="row">
-		<div class= "col-6" id="player">
-		{% comment %} <iframe src="https://www.youtube.com/embed/{{trailer}}" frameborder="0"
-		allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-		allowfullscreen	
-		></iframe> {% endcomment %}
+		<div class="col-md-12">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item" role="presentation">
+					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">줄거리</a>
+				</li>
+				<li class="nav-item" role="presentation">
+					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">예고편</a>
+				</li>
+				<li class="nav-item" role="presentation">
+					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">...</a>
+				</li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">{{ movie.overview }}</div>
+				<br>
+				<!-- Youtube -->
+				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+					<div class="row">
+						<div class= "col-6" id="player">
+						{% comment %} <iframe src="https://www.youtube.com/embed/{{trailer}}" frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+						allowfullscreen	
+						></iframe> {% endcomment %}
+						<br>
+						</div>
+					</div>				
+				</div>
+				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"></div>
+			</div>
 		</div>
 	</div>
+</div>
 	</section>
 {% endblock content %}
 
 {% block script %}
 	<script>
+    const likeBtnForm = document.querySelectorAll('#form_like')
+    likeBtnForm.forEach(likeBtnForm=>{
+      // console.log(likeBtnForm.dataset.articleid) // movie의 pk 
+      const movieId = likeBtnForm.dataset.articleid 
+      likeBtnForm.addEventListener('click', function (e) {
+        e.preventDefault()
+        
+        const csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
+        const options = { headers: {'X-CSRFToken': csrfToken}}
 
+        const API_URL = `/movies/${movieId}/like/`
+        axios.post(API_URL, {}, options)
+          .then(res=>{
+            // console.log(res)
+            const {is_like,like_count} = res.data
+
+            // 하트 가져오기
+            const likeHeart = document.querySelector(`.heart-${movieId}`)
+            likeHeart.style.color = is_like ? 'crimson' : 'white'
+            const likeCount = document.querySelector(`#like_count-${movieId}`)
+            likeCount.innerText = like_count
+          })
+          .catch(err=>{
+            console.error(err)
+          })
+      })
+    }) 
 	</script>
 	<style>
 	.player {
   position: relative;
   padding-top: 56.25%;
-}
+	}
 
-.player > iframe {
-  position: absolute;
-  top: 0;
-  width: 500px;
-  height: 100%;
-}
+	.player > iframe {
+		position: absolute;
+		top: 0;
+		width: 500px;
+		height: 100%;
+	}
 	</style>
 {% endblock  %}
