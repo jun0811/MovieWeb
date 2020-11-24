@@ -1,4 +1,18 @@
 {% extends 'base.html' %}
+
+{% block style %}
+.like-button {
+	width: 70px;
+	height: 40px;
+	border-color: white;
+	color: white;
+}
+.like-button:hover {
+  background: white; 
+  color: rgb(109, 166, 155);
+}
+{% endblock style %}
+
 {% block content %}
 <!-- 
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -44,19 +58,21 @@
           {% for f in first %}
             <div class="col-md-4">
               <a href="{% url 'movies:detail' f.pk %}"><img src="{{f.poster_path}}" alt="Image" style="max-width:100%; height: 480px;"></a>
-              <form action="{%url 'movies:like' f.pk%}" data-articleId= "{{f.pk}}" id = "form_like" method="POST" class="d-inline">
+              <form action="{%url 'movies:like' f.pk%}" data-articleId= "{{f.pk}}" id="form_like" method="POST" class="d-inline">
                 {% csrf_token %}
                 {% if user in f.like_users.all %}
-                  <button class="btn btn-link">
-                    <i class="fas fa-heart fa-lg heart-{{f.pk}}" style="color:crimson;"></i>
+                  <button class="btn btn-link p-0 like-button">
+                    <i class="fas fa-heart fa-lg heart-{{ f.pk }} mr-1" style="color:crimson;"></i>
+                    <span id ="like_count-{{ f.pk }}">{{ f.like_users.all|length }} </span>
                   </button>
                 {% else %}
-                  <button class="btn btn-link ">
-                    <i class="fas fa-heart fa-lg heart-{{f.pk}}" style="color:black;"></i>
+                  <button class="btn btn-link p-0 like-button">
+                    <i class="fas fa-heart fa-lg heart-{{ f.pk }} mr-1" style="color:black;"></i>
+                    <span id ="like_count-{{ f.pk }}">{{ f.like_users.all|length }} </span>
                   </button>
                 {% endif %}
               </form>
-              <span id ="like_count-{{f.pk}}">{{ f.like_users.all|length }} </span>
+              {% comment %} <span id ="like_count-{{f.pk}}">{{ f.like_users.all|length }} </span> {% endcomment %}
             </div>
           {% endfor %}
           </div><!--.row-->
@@ -69,17 +85,18 @@
               <a href="{% url 'movies:detail' s.pk %}"><img src="{{s.poster_path}}" alt="Image" style="max-width:100%; height: 480px;"></a>
               <form action="{%url 'movies:like' s.pk%}" data-articleId= "{{s.pk}}" id = "form_like" method="POST" class="d-inline">
                 {% csrf_token %}
-                {% if user in s.like_users.all %}
-                  <button class="btn btn-link">
-                    <i class="fas fa-heart fa-lg heart-{{s.pk}}" style="color:crimson;"></i>
+                {% if user in f.like_users.all %}
+                  <button class="btn btn-link p-0 like-button">
+                    <i class="fas fa-heart fa-lg heart-{{ s.pk }} mr-1" style="color:crimson;"></i>
+                    <span id ="like_count-{{ s.pk }}">{{ s.like_users.all|length }} </span>
                   </button>
                 {% else %}
-                  <button class="btn btn-link ">
-                    <i class="fas fa-heart fa-lg heart-{{s.pk}}" style="color:black;"></i>
+                  <button class="btn btn-link p-0 like-button">
+                    <i class="fas fa-heart fa-lg heart-{{ s.pk }} mr-1" style="color:black;"></i>
+                    <span id ="like_count-{{ s.pk }}">{{ s.like_users.all|length }} </span>
                   </button>
                 {% endif %}
               </form>
-              <span id ="like_count-{{s.pk}}">{{ s.like_users.all|length }} </span>
             </div>
           {% endfor %}
           </div><!--.row-->
@@ -91,18 +108,18 @@
               <div class="col-md-4"><a href="{% url 'movies:detail' t.pk %}"><img src="{{t.poster_path}}" alt="Image" style="max-width:100%;height: 480px;"></a>
               <form action="{%url 'movies:like' t.pk%}" data-articleId= "{{t.pk}}" id = "form_like" method="POST" class="d-inline">
                 {% csrf_token %}
-                {% if user in t.like_users.all %}
-                  <button class="btn btn-link">
-                    <i class="fas fa-heart fa-lg heart-{{t.pk}}" style="color:crimson;"></i>
+                {% if user in f.like_users.all %}
+                  <button class="btn btn-link p-0 like-button">
+                    <i class="fas fa-heart fa-lg heart-{{ t.pk }} mr-1" style="color:crimson;"></i>
+                    <span id ="like_count-{{ t.pk }}">{{ t.like_users.all|length }} </span>
                   </button>
                 {% else %}
-                  <button class="btn btn-link ">
-                    <i class="fas fa-heart fa-lg heart-{{t.pk}}" style="color:black;"></i>
+                  <button class="btn btn-link p-0 like-button">
+                    <i class="fas fa-heart fa-lg heart-{{ t.pk }} mr-1" style="color:black;"></i>
+                    <span id ="like_count-{{ t.pk }}">{{ t.like_users.all|length }} </span>
                   </button>
                 {% endif %}
-              </form>
-              <span id ="like_count-{{t.pk}}">{{ t.like_users.all|length }} </span>
-            
+              </form>            
             </div>
           {% endfor %}
           </div><!--.row-->
@@ -118,18 +135,25 @@
   </div>
   <br>
   <hr>
-  {% if request.user.is_authenticated %}
-    <div class="recommand_movies">
-      {% if recommand %}
-      <h2>{{request.user}}님에게 추천하는 영화</h2>
-      {% for movie in recommand %}
-        <a href="{% url 'movies:detail' movie.pk %}"><img src="{{movie.poster_path}}" alt="Image" style="max-width:100%; height: 480px;"></a>
-      {% endfor %}
-      {% else %}
-        <div>영화에 좋아요를 눌러주시면 영화를 추천해드립니다</div>
+  <div class="container">
+	<div class="row">
+		<div class="col-md-12">
+      {% if request.user.is_authenticated %}
+        <div class="recommand_movies">
+          {% if recommand %}
+          <h2>{{request.user}}님에게 추천하는 영화</h2>
+          {% for movie in recommand %}
+            <a href="{% url 'movies:detail' movie.pk %}"><img src="{{movie.poster_path}}" alt="Image" style="max-width:100%; height: 480px;"></a>
+          {% endfor %}
+          {% else %}
+            <div>영화에 좋아요를 눌러주시면 영화를 추천해드립니다</div>
+          {% endif %}
+        </div>
       {% endif %}
-    </div>
-  {% endif %}
+
+		</div>
+	</div>
+</div>
 {% endblock content %}
 
 {% block script %}
