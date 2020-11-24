@@ -2,15 +2,18 @@
 
 {% block content %}
   <h2>create</h2>
-  <form action="" method ="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-    {% comment %} <p>
-    글 제목  : {{ form.title}}
-    </p>
-    <p>
-    글 내용 : {{ form.content}}
-    </p> {% endcomment %}
+<form action="" method="POST">
+    <input type="hidden" name="csrfmiddlewaretoken" value="RpezAj1r4sBCM4mRn7tsCCBWRuwv4Pu7GlmBtFPz9VT7AbWfP6c6FvCJsZhegrsI">
+    <p><label for="id_title">Title:</label> <input type="text" name="title" maxlength="100" required="" id="id_title"></p>
+<p><label for="id_movie_title">Movie title:</label> <input type="text" name="movie_title" maxlength="50" required="" id="id_movie_title"></p>
+<p><label for="id_rate">Rate:</label> <input type="number" name="rate" required="" id="id_rate"></p>
+<p><label for="id_content">Content:</label> <textarea name="content" cols="40" rows="10" required="" id="id_content"></textarea></p>
+<p><label for="id_user">User:</label> <select name="user" required="" id="id_user">
+  <option value="1" selected="">{{user}}</option>
+  <option value="" selected="">------</option>
+
+</select></p>
+    
     <input type="submit">
   </form>
 

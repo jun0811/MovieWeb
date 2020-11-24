@@ -128,7 +128,15 @@ def like(request,pk):
             'like_count' : movie.like_users.count()
         }
         return JsonResponse(data)
-    return redirect('accounts:login')
+    else:
+        movie = get_object_or_404(Movies, pk=pk)
+        # user = request.user
+        is_like = False
+        data ={
+            'is_like' : is_like,
+            'like_count' : movie.like_users.count()
+        }
+        return JsonResponse(data)
 
 
 
@@ -153,7 +161,7 @@ def detail(request, movie_pk):
     context = {
         'movie': movie,
         'genres': genres,
-        'trailer': trailer['items'][0]['id']['videoId']
+        # 'trailer': trailer['items'][0]['id']['videoId']
     }
     return render(request, 'movies/detail.html', context)
 
