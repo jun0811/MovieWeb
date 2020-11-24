@@ -68,8 +68,10 @@ def profile(request, username):
         for genre in movie.genres.all():
             genres[genre.name] +=1
     top_3 = sorted(genres.items(), reverse=True, key= lambda x : x[1])[:3] # 선호도 가장 높은 3개
+    # print(top_3)
     for i in range(3):
-        like_genres.append(top_3[i][0])
+        if top_3[i][1] != 0:
+            like_genres.append(top_3[i][0])
     # print(like_genres)
     context ={
         'person': person,
@@ -124,3 +126,4 @@ def change_password(request):
         'form': form,
     }
     return render(request, 'accounts/change_password.html', context)
+
