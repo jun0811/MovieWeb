@@ -161,11 +161,6 @@ def detail(request, movie_pk):
     context = {
         'movie': movie,
         'genres': genres,
-<<<<<<< HEAD
-        # 'trailer': trailer['items'][0]['id']['videoId'],
-=======
-        # 'trailer': trailer['items'][0]['id']['videoId']
->>>>>>> 42f0848e70dcfeda2d34c6f1a42c8d3f2791a35b
     }
     return render(request, 'movies/detail.html', context)
 
