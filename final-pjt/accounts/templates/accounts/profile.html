@@ -6,14 +6,15 @@
   <div><span>좋아하는 영화 |</span> 
   <hr>
     {% for movie in like_movies %}
-      <div>{{movie.title}}</div>
+      <div>{{ movie.title }}</div>
     {% endfor %}
   <br>
-  <div><span>선호하는 장르|</span>
-  <hr>
+  <div>
+    <span>선호하는 장르|</span>
+    <hr>
   </div>
     {% for genre in like_genres %}
-      <span>{{genre}} || </span>
+      <span>{{ genre }} || </span>
     {% endfor %}
   
   </div>
