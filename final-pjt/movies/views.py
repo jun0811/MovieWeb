@@ -128,7 +128,15 @@ def like(request,pk):
             'like_count' : movie.like_users.count()
         }
         return JsonResponse(data)
-    return redirect('accounts:login')
+    else:
+        movie = get_object_or_404(Movies, pk=pk)
+        # user = request.user
+        is_like = False
+        data ={
+            'is_like' : is_like,
+            'like_count' : movie.like_users.count()
+        }
+        return JsonResponse(data)
 
 
 
