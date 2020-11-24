@@ -7,8 +7,9 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
-    path('<username>/', views.profile, name='profile'),
     path('update/', views.update, name='update'),
-    path('delete/', views.delete, name='delete'),
+    # profile이 update보다 아래에 있어야 문제가 없음 .... 
     path('password/', views.change_password, name='change_password'),
+    path('<username>/', views.profile, name='profile'),
+    path('delete/', views.delete, name='delete'),
 ]
