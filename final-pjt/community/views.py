@@ -24,6 +24,7 @@ def reviews(request):
 def create(request):
     if request.method =='POST':
         form = ReviewForm(request.POST)
+        print(form)
         if form.is_valid():
             review = form.save(commit=False) # 당장 저장하지 않고 user 등록후 저장 
             review.user = request.user # accounts기능 완료후 필요 
