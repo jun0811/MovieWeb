@@ -6,6 +6,11 @@
 	.reviews{
 		color:white;
 	}
+	.modal-button{
+		
+		border : 0;
+		outline : 0;
+	}
 {% endblock style %}
 
 {% block content %}
@@ -13,8 +18,36 @@
 	
   <div class= "reviews d-flex justify-content-between"> 
   <h1>Reviews</h1>
-  <a class="text-white"href="{%url 'community:create'%}"><i class="fas fa-edit"></i></a>
-  </div>
+	<button id="createBtn" class="modal-button bg-dark" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-edit"></i></button>
+	</div>
+
+	<!-- modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title text-dark" id="exampleModalLabel">글 작성</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+					<!-- axios 요청 -->
+					<form action="#" method="GET">
+						<div class="modal-body">
+							<input type="text" name="movie_title" placeholder="Title" id="movie-input"> 
+						</div>
+						<div class="modal-footer">
+						<div id="movie-box"></div>
+						<br>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" id="movie-button">검색</button>
+						</div>
+					</form>
+					<!-- -->
+			</div>
+		</div>
+	</div>
+
     <hr>
 	<div class="container-fluid bg-white">
 		<div class="row ">
@@ -56,3 +89,50 @@
 	</div>
 {% endblock content %}
 
+{% block script %}
+	<script>
+		const BASE_URL = 'http://127.0.0.1:8000'
+		const input = document.querySelector('#movie-input')
+		const button = document.getElementById('movie-button')
+		const movielist = document.querySelector('#movie-box')
+		const createBtn = document.querySelector('#createBtn')
+		function addMovie(movie){
+			console.log(movie.title)
+			const title = movie.title
+			const movieId = movie.movie_id
+			console.log(movieId)
+			const a = document.createElement('a')
+			a.innerText = title
+			a.setAttribute('style', 'color: black;')
+			a.setAttribute('class', 'btn')
+			a.setAttribute('href', `${BASE_URL}/community/create/${movieId}/`)
+			movielist.appendChild(a)
+		}
+
+		function movieData(){
+			const content = input.value
+			axios.get(`${BASE_URL}/community/search_title/${content}`)
+				.then(res=>{
+					while(movielist.firstChild){
+						movielist.removeChild(movielist.firstChild)
+					}
+					for (let movie in res.data) {
+						addMovie(res.data[movie])
+					}
+				})
+		}
+
+		button.addEventListener('click', movieData)
+		createBtn.addEventListener('click', ()=>{
+			input.value = ""
+			while(movielist.firstChild){
+						movielist.removeChild(movielist.firstChild)
+			}
+		})
+		{% comment %} input.addEventListener('keypress', function(e){
+			if (e.code ==="Enter"){
+				movieData()
+			} 
+		}){% endcomment %}
+	</script>
+{% endblock script %}

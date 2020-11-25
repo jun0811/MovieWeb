@@ -86,7 +86,7 @@
      {% if request.user == comment.user %}
         <form action="{% url 'community:comments_delete' review.pk comment.pk %}" method="POST" class="d-inline">
           {% csrf_token %}
-          <button type="button" class="btn btn-danger btn-circle"><i class="fas fa-trash-alt"></i></button>
+          <button type="submit" class="btn btn-danger btn-circle"><i class="fas fa-trash-alt"></i></button>
         </form> 
       {% endif %}
   </div>

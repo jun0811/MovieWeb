@@ -4,6 +4,7 @@ from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from .models import Movies, Genre
+
 # Create your views here.
 def tmdbdata(request):
     BASE_API = 'https://api.themoviedb.org/3/movie/top_rated'
@@ -205,4 +206,3 @@ def search(request, input):
         'result': result,
     }
     return JsonResponse(data)
-
