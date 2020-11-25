@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block style %}
+  .page-item>a{
+    color :black;
+  }
+  .page-item>a:hover{
+    color: rgb(109, 166, 155);
+  }
+{% endblock  %}
+
+{% block content %}
+
+<div class="container">
+	<div class="row">
+  {% for movie in movies %}
+		<div class="col-md-4">
+      <div class="card text-white bg-dark mb-3" style="max-width: 50rem;">
+        <img src="{{ movie.poster_path }}" class="card-img-top" alt="movie_poster" style="height: 500px">
+        <div class="card-header" style="font-size: 80%;">{{ movie.title }}</div>
+        <div class="card-body">
+          <p class="card-text text-style">{{ movie.overview }}</p>
+          <a href="{% url 'movies:detail' movie.pk %}" class="btn button">상세정보</a>
+        </div>
+      </div>
+		</div>
+  {% endfor %}
+	</div>
+</div>
+<br>
+<ul class="pagination justify-content-center">
+	<li class="page-item"><a class="page-link" href="{% url 'movies:top_ratedlist' page='1' %}">1</a></li>
+	<li class="page-item"><a class="page-link" href="{% url 'movies:top_ratedlist' page='2' %}">2</a></li>
+	<li class="page-item"><a class="page-link" href="{% url 'movies:top_ratedlist' page='3' %}">3</a></li>
+	<li class="page-item"><a class="page-link" href="{% url 'movies:top_ratedlist' page='4' %}">4</a></li>
+	<li class="page-item"><a class="page-link" href="{% url 'movies:top_ratedlist' page='5' %}">5</a></li>
+	<li class="page-item"><a class="page-link" href="{% url 'movies:top_ratedlist' page='6' %}">6</a></li>
+	<li class="page-item"><a class="page-link" href="{% url 'movies:top_ratedlist' page='7' %}">7</a></li>
+	<li class="page-item"><a class="page-link" href="{% url 'movies:top_ratedlist' page='8' %}">8</a></li>
+</ul>
+{% endblock content %}

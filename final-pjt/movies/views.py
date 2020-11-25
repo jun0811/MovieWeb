@@ -156,28 +156,42 @@ def youtube(title):
 def detail(request, movie_pk):
     movie = get_object_or_404(Movies, pk=movie_pk)
     genres = movie.genres.all().values()
-    # trailer = youtube(movie.title)
+    trailer = youtube(movie.title)
     context = {
         'movie': movie,
         'genres': genres,
+        'trailer': trailer['items'][0]['id']['videoId']
     }
     return render(request, 'movies/detail.html', context)
 
 
 
 def search_genre(request, genre):
-    movies = Movies.objects.get(genres = genre)
+    movies = Movies.objects.all()
+    results = []
+    for movie in movies:
+        for gen in movie.genres.all():
+            # print(type(gen.id))
+            if int(genre) == gen.id:
+                results.append(movie)
+    # print(result)
     context ={
-        'movies' : movies,
+        'results' : results,
     }
     return render(request, 'movies/search_genre.html',context)
 
-def topratedlist(request):
+
+# page = 8페이지
+
+def top_ratedlist(request,page):
+    # movie_items = 200
+
     movies = Movies.objects.all()
+    movies = movies[0+(24*page):24+(24*page)]
     context = {
         'movies': movies,
     }
-    return render(request, 'movies/topratedlist.html', context)
+    return render(request, 'movies/top_ratedlist.html', context)
 
 
 def search(request, input):
@@ -191,3 +205,4 @@ def search(request, input):
         'result': result,
     }
     return JsonResponse(data)
+
