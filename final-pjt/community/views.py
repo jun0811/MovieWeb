@@ -2,6 +2,10 @@ from django.shortcuts import render,redirect,get_object_or_404
 from .models import Review,Comment
 from django.views.decorators.http import require_http_methods,require_POST
 from .forms import ReviewForm, CommentForm
+from movies.models import Movies
+from django.http import JsonResponse
+
+
 # Create your views here.
 def index(request):
     reviews = Review.objects.order_by('-pk')[0:5]
@@ -21,7 +25,7 @@ def reviews(request):
 
 # @login_required
 @require_http_methods(['GET', 'POST'])
-def create(request):
+def create(request,movie_id):
     if request.method =='POST':
         form = ReviewForm(request.POST)
         print(form)
@@ -35,8 +39,10 @@ def create(request):
             return redirect('community:index') # 추후에 detail로 수정필요 
     else:
         form = ReviewForm()
+        movie = get_object_or_404(Movies,movie_id=movie_id)
     context = {
         'form' : form ,
+        'movie' : movie,
     }
     return render(request,'community/create.html',context)
 
@@ -94,7 +100,6 @@ def comments_create(request,pk):
             comment.review = review
             comment.user = request.user
             comment.save()
-            print('&&&&',review.pk)
             return redirect('community:detail', review.pk)
         context = {
             'comment_form' : comment_form,
@@ -104,10 +109,24 @@ def comments_create(request,pk):
     return redirect('accounts:login')
 
 
-
+@require_POST
 def comments_delete(request, review_pk, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+
     if request.user.is_authenticated:
         comment = get_object_or_404(Comment, pk = comment_pk)
         if request.user == comment.user:
             comment.delete()
     return redirect('community:detail', review_pk)
+
+
+# @require_POST
+def search_title(request, title):
+    print(title)
+    movies = Movies.objects.filter(title__contains=title)
+    # print(movies.object.all())
+    data = {
+        "movies" :movies
+    }
+    return JsonResponse(list(movies.values()),safe=False)
+
