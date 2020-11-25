@@ -95,7 +95,7 @@ def update(request):
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('movies:index')  # 수정 필요(마이페이지로 redirect)
+            return redirect('accounts:profile', request.user.username) 
     else:
         form = CustomUserChangeForm(instance=request.user)
     context = {
@@ -119,7 +119,7 @@ def change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            return redirect('movies:index') # 수정 필요(마이페이지로 redirect)
+            return redirect('accounts:profile', request.user.username)
     else: 
         form = PasswordChangeForm(request.user)
     context = {
