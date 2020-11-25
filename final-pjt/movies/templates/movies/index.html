@@ -22,29 +22,73 @@
 .btn-size {
   width: 76px;
 }
+.left, .right{
+  font-size: 80px;
+  margin-top: 10rem;
+  margin-left : 20px;
+  margin-right: 20px;
+}
+a:hover{
+  text-decoration: none;
+}
+.container-fluid{
+  width : 1270px;
+  height : 700px;
+}
+.wrap {
+  height: 100%;
+  display: flex;
+}
+
+.wrap>a>button {
+  width: 110px;
+  height: 45px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgb(109, 166, 155);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  }
+
+.wrap>a>button:hover {
+  background-color: rgb(109, 166, 155);
+  box-shadow: 0px 15px 20px rgb(109, 166, 155);
+  color: #fff;
+  transform: translateY(-7px);
+}
+.wrap>a{
+  padding: 0;
+}
 {% endblock style %}
 
 {% block content %}
 
-<div class="container">
+<div class="container-fluid">
 
   <div class="row">
     <div class="col-md-12">
       <div class="d-flex justify-content-between">
         <div class="pt-3">Top Rated</div>
-        <a href="{% url 'movies:topratedlist' %}">
+        
+        <a href="{% url 'movies:top_ratedlist' page='1' %}">
           <i class="far fa-plus-square"></i>
         </a>
+        
       </div>
-      <div id="Carousel" class="carousel slide">
-        <ol class="carousel-indicators">
-            <li data-target="#Carousel" data-slide-to="0" class="active"></li>
-            <li data-target="#Carousel" data-slide-to="1"></li>
-            <li data-target="#Carousel" data-slide-to="2"></li>
-        </ol>
+      <div id="Carousel" class="carousel slide d-flex justify-content-between">
+        <a data-slide="prev" href="#Carousel" class="left carousel-control ">‹</a>
+
+        
         <!-- Carousel items -->
         <div class="carousel-inner">
-
         <div class="carousel-item active">
           <div class="row mt-3">
           {% for f in first %}
@@ -118,15 +162,18 @@
         </div><!--.item-->
           
         </div><!--.carousel-inner-->
-          <a data-slide="prev" href="#Carousel" class="left carousel-control">‹</a>
-          <a data-slide="next" href="#Carousel" class="right carousel-control">›</a>
-        </div><!--.Carousel-->
-                
-    </div>
+        
+      <a data-slide="next" href="#Carousel" class="right carousel-control">›</a>
+      <hr> 
+      <ol class="carousel-indicators mt-10">
+        <li data-target="#Carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#Carousel" data-slide-to="1"></li>
+        <li data-target="#Carousel" data-slide-to="2"></li>
+      </ol>
+    </div><!--.Carousel-->     
+  </div>
   </div>
 </div>
-
-
 <!-- 검색창 시작-->
 <div class="container search-style">
     <label for="searchInput">DB 영화 검색</label>
@@ -136,9 +183,69 @@
     </div>
     <button type="submit" class="btn btn-size btn-outline-light" id="searchBtn">검색</button>
   </div>
+  <!-- 장르 검색 -->
+  <div class = "container">
+    <div class ="row">
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="1"%}">
+      <button class="button">액션</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="2"%}"><button class="button">모험</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="3"%}"><button class="button">판타지</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="4"%}"><button class="button">공상과학</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="5"%}"><button class="button">애니메이션</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="6"%}"><button class="button">음악</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="7"%}"><button class="button">TV</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="8"%}"><button class="button">다큐</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="9"%}"><button class="button">드라마</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="10"%}"><button class="button">가족</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="11"%}"><button class="button">코미디</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="12"%}"><button class="button">로맨스</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="13"%}"><button class="button">공포</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="14"%}"><button class="button">미스터리</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="15"%}"><button class="button">범죄</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="16"%}"><button class="button">전쟁</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="17"%}"><button class="button">서부</button></a>
+      </span>
+      <span class="wrap mt-3 mr-1">
+      <a href="{%url 'movies:search_genre' genre="18"%}"><button class="button">역사</button></a>
+      </span>
+    </div>
+  </div>
+  <!-- 장르검색 끝-->
 </div>
 <!-- 검색창 끝 -->
-
 
 <!-- 검색결과 시작-->
 <div class="container">

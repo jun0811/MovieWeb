@@ -1,4 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
+	<div class="row">
+  {% for result in results %}
+		<div class="col-md-4">
+      <div class="card text-white bg-dark mb-3" style="max-width: 50rem;">
+        <img src="{{ result.poster_path }}" class="card-img-top" alt="movie_poster" style="height: 500px">
+        <div class="card-header" style="font-size: 80%;">{{ result.title }}</div>
+        <div class="card-body">
+          <p class="card-text text-style">{{ result.overview }}</p>
+          <a href="{% url 'movies:detail' result.pk %}" class="btn button">상세정보</a>
+        </div>
+      </div>
+		</div>
+  {% endfor %}
+	</div>
+</div>
 {% endblock  %}
