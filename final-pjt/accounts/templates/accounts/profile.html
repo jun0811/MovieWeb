@@ -33,7 +33,7 @@
 .a-review-style {
   font-size: 25px;
   color: black;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 .second-box {
   background-color: rgb(224, 224, 224);
@@ -43,7 +43,7 @@
 }
 .genre-font-style {
   font-size: 25px;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 .third-box {
   background-color: rgb(224, 224, 224);
@@ -64,7 +64,8 @@
 }
 .font-style {
   margin-top: 5px;
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: bold;
 }
 .box-style {
   margin-top: 15px;
@@ -114,7 +115,7 @@
       <div class="font-style ml-2">내가 좋아하는 영화</div>
 			<div class="row mt-3">
         {% for movie in like_movies %}
-          <div class="col-md-2 ml-2">
+          <div class="col-md-2">
             <a href="{% url 'movies:detail' movie.pk %}" style="text-decoration: none;"><img src="{{ movie.poster_path }}" alt="" class="poster-style">
             <div class="text-center movie-title mb-3">{{ movie.title }}</div></a>
           </div>
