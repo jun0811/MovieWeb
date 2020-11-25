@@ -164,6 +164,14 @@ def detail(request, movie_pk):
     return render(request, 'movies/detail.html', context)
 
 
+
+def search_genre(request, genre):
+    movies = Movies.objects.get(genres = genre)
+    context ={
+        'movies' : movies,
+    }
+    return render(request, 'movies/search_genre.html',context)
+
 def topratedlist(request):
     movies = Movies.objects.all()
     context = {
