@@ -1,23 +1,128 @@
 {% extends 'base.html' %}
 
+{% block style %}
+.container-style {
+  background-color: black;
+  border-radius: 10px;
+  color: white;
+  margin-top: 50px;
+}
+.poster-style {
+  width: 160px;
+  height: 230px;
+}
+.movie-title {
+  font-size: 14px;
+  color: black;
+}
+.profile-title {
+  background-color: white;
+  color: black;
+  height: 200px;
+  margin-top: 80px;
+  border-radius: 5px;
+}
+.title-style {
+  margin-top: 50px;
+  margin-left: 20px;
+}
+.a-update-style {
+  font-size: 15px;
+  color: black;
+}
+.a-review-style {
+  font-size: 25px;
+  color: black;
+  font-weight: bold;
+}
+.second-box {
+  background-color: rgb(224, 224, 224);
+  color: black;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+.genre-font-style {
+  font-size: 25px;
+  font-weight: bold;
+}
+.third-box {
+  background-color: rgb(224, 224, 224);
+  color: black;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+.verticalLine {
+  border-right: thin solid black;
+}
+.vertical-align {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  transform: translate(-50%, -35%);
+}
+.font-style {
+  margin-top: 5px;
+  font-size: 20px;
+}
+.box-style {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+{% endblock style %}
+
+
 {% block content %}
-  <div>user | {{ person.username }}</div> 
-  <br>
-  <div><span>좋아하는 영화 |</span> 
-  <hr>
-    {% for movie in like_movies %}
-      <div>{{ movie.title }}</div>
-    {% endfor %}
-  <br>
-  <div>
-    <span>선호하는 장르|</span>
-    <hr>
-  </div>
-    {% for genre in like_genres %}
-      <span>{{ genre }} || </span>
-    {% endfor %}
-  
-  </div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 profile-title">
+      <div class="title-style">
+        <div style="font-size: 40px;">{{ person.username }}님의 Profile</div>
+          <span><a href="{% url 'accounts:update' %}" class="a-update-style">회원정보 수정 ></a></span>
+      </div>
+		</div>
+	</div>
+	<div class="row second-box">
+		<div class="col-md-4 verticalLine box-style">
+      <div class="font-style ml-2">나의 리뷰</div>
+      {% for review in person.review_set.all %}
+        <div>
+          <a href="{% url 'community:detail' review.pk %}" class="a-review-style ml-2">{{ review.title }}</a>
+          </div>
+      {% endfor %}
+		</div>
+		<div class="col-md-4 verticalLine box-style">
+      <div class="font-style">나의 댓글</div>
+      {% for comment in person.comment_set.all %}
+        <div>
+          <a href="{% url 'community:detail' comment.review.pk %}" class="a-review-style">{{ comment.content }}</a>
+          </div>
+      {% endfor %}      
+		</div>
+		<div class="col-md-4 box-style">
+      <div class="font-style">내가 선호하는 장르</div>
+      <div>
+        {% for genre in like_genres %}
+          <span class="genre-font-style">{{ genre }}</span>
+        {% endfor %}    
+      </div>
+		</div>
+	</div>
+	<div class="row third-box">
+		<div class="col-md-12 box-style">
+      <div class="font-style ml-2">내가 좋아하는 영화</div>
+			<div class="row mt-3">
+        {% for movie in like_movies %}
+          <div class="col-md-2 ml-2">
+            <a href="{% url 'movies:detail' movie.pk %}" style="text-decoration: none;"><img src="{{ movie.poster_path }}" alt="" class="poster-style">
+            <div class="text-center movie-title mb-3">{{ movie.title }}</div></a>
+          </div>
+        {% endfor %}  
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock  %}
 
 {% block script %}
