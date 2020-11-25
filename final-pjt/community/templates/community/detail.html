@@ -1,49 +1,109 @@
-{% extends 'base.html' %}
-
+{% extends 'community.html' %}
+{% block style %}
+  #info {
+    font-size :20px;
+  }
+  #content{
+    width: 1000px;
+    height: 300px;
+  }
+  #buttons {
+    margin-top: 0.65em;
+    width: 28px;
+    height: 32px;
+  }
+  #user {
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+  }
+  #comment{
+    font-size: 25px;
+    font-family: sans-serif;
+  }
+  hr{
+    border-top: 2px solid white;
+  }
+  h4{
+    color : white;
+    font-weight : bold;
+  }
+  #id_content{
+    height:35px;
+  }
+{% endblock  %}
 {% block content %}
-  <h2>[Detail]</h2>
+  <div class="ml-5 col-md-8 bg-dark">
+  <a href="{%url 'community:reviews'%}"><h1>[리뷰]</h1></a>
+  <br>
+  <!-- 리뷰 내용-->
   <hr>
-  <h2>{{ review.title}}</h2>
-  <p>영화 제목 : {{review.movie_title}}</p>
-  <p>내용 : {{ review.content }}</p>
-  <p>작성 시각: {{ article.created_at }}</p>
-  <p>수정 시각: {{ article.updated_at }}</p>
+  <h1 class = "d-flex justify-content-center " >{{ review.title}}</h1>
   <hr>
-  {% if request.user == review.user %}
-    <a href="{%url 'community:update' review.pk%}">[UPDATE]</a>
-    <form action="{% url 'community:delete' review.pk %}" method="POST">
-      {% csrf_token %}
-      <button>[DELETE]</button>
-    </form> 
-  {% endif %}
-  <a href="{%url 'community:index'%}">[뒤로가기]</a>
+    <p id="info" class="d-flex justify-content-end"><i class="far fa-calendar-alt">{{ review.created_at|date:"D d M Y" }}</i></p>
+    <p id="info" class="d-flex justify-content-end"> <i class="far fa-user"> <span>글쓴이: </span>{{ user }}</i></p>
+    {% if comments|length %}
+      <p id="info" class="d-flex justify-content-end"><i class="far fa-comment"> {{comments|length}}개의 댓글이 있습니다.</i></p>
+    {% else %}
+      <p id="info" class="d-flex justify-content-end"><i class="far fa-comment"> 0개의 댓글이 있습니다.</i></p>
+      
+    {% endif %}
   <hr>
-<h4>댓글</h4>
-{% if comments|length %}
-  <p>{{comments|length}}개의 댓글이 있습니다.</p>
-{% endif %}
+  <div class = "mx-5 ">
+   <i class="fas fa-video"></i> MOVIE<p class="mb-0 text-monospace ">{{review.movie_title}}</p>
+  </div>
+    <hr>
+  <div class = "d-flex justify-content-center ">
+    <div id="content" class=" text-white ">
+      <br>
+      <div> {{ review.content }}</div>
+    </div>
+  </div>
+  <!-- 리뷰 끝-->
+ 
+  <!--버튼-->
+  <div class ="d-flex justify-content-around">
+    {% if request.user == review.user %}
+      <a class="d-flex align-items-center" href="{%url 'community:update' review.pk%}">
+      <i class="mr-3 fas fa-pen-square "></i></a>
+      <form class="d-flex align-items-center"  id ="buttons" action="{% url 'community:delete' review.pk %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-circle  "><i class="fas fa-trash-alt"></i></button>
+      </form>
+      
+    {% endif %}
+    <a class="d-flex align-items-center" href="{%url 'community:index'%}"><i class="fas fa-arrow-circle-left"></i></a>
+  </div>
+  <hr>
+  <!-- 댓글-->
+
+  <!-- 리뷰 내용 끝-->
+<h4><댓글></h4>
+<hr>  
 {% for comment in comments %}
-    <li>
-      {{ comment.user }} - {{ comment.content }}
+  <div>
+    <p id ="user"> {{ comment.user }} </p>
+    <p id ="comment">{{ comment.content }}</p>
      {% if request.user == comment.user %}
         <form action="{% url 'community:comments_delete' review.pk comment.pk %}" method="POST" class="d-inline">
           {% csrf_token %}
-          <input type="submit" value="DELETE">
+          <button type="button" class="btn btn-danger btn-circle"><i class="fas fa-trash-alt"></i></button>
         </form> 
       {% endif %}
-    </li>
-  {% empty %}
-    <p>댓글이 아직 없어요..</p>
+  </div>
+      {% empty %}
+    <p>댓글이 아직 없어요...</p>
   {% endfor %}
   <hr>
   <h4>댓글 작성</h4>
   {% if request.user.is_authenticated %}
     <form action="{% url 'community:comments_create' review.pk %}" method="POST">
       {% csrf_token %}
-      {{ comment_form }}
-      <input type="submit">
+      <input name="content" cols="40" rows="10" required="" id="id_content" ></input>
+      <button id="submit" name="submit" type="submit" class="btn btn-success mb-2">Submit</button>
     </form>
   {% else %}
     <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인 하세요.]</a>
   {% endif %}
+  </div>
+
 {% endblock  %}

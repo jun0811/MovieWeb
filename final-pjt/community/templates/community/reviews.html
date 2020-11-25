@@ -1,61 +1,58 @@
 {% extends 'community.html' %}
 {% block style %}
   td, th {
-    color : white;
+    color : dark;
   }
+	.reviews{
+		color:white;
+	}
 {% endblock style %}
 
 {% block content %}
-  <div class= "d-flex justify-content-between"> 
+	<div class="ml-5 col-md-9 bg-dark">
+	
+  <div class= "reviews d-flex justify-content-between"> 
   <h1>Reviews</h1>
   <a class="text-white"href="{%url 'community:create'%}"><i class="fas fa-edit"></i></a>
   </div>
     <hr>
-  <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>
-							#
-						</th>
-						<th>
-							Title
-						</th>
-						<th>
-							Content
-						</th>
-						<th>
-							Author
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-        {% for review in reviews %}
-					<tr>
-						<td>
-							{{review.pk}}
-						</td>
-						<td>
-							<a href="{%url "community:detail" review.pk %}">
-              {{review.title}} </a>
-						</td>
-						<td>
-							{{review.content}}
-						</td>
-						<td>
-              {{review.user}}
-						</td>
-					</tr>
-          {% endfor %}
-				</tbody>
-			</table>
+	<div class="container-fluid bg-white">
+		<div class="row ">
+			<div class="col-md-12 p-0 ">
+				<table class="table table-striped">
+					<thead>
+						<tr style="background-color: rgb(109, 166, 155);">
+							<th>#</th>
+							<th>Title</th>
+							<th>Content</th>
+							<th>Author</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for review in reviews %}
+							<tr>
+								<td>
+									{{review.pk}}
+								</td>
+								<td>
+									<a  href="{%url "community:detail" review.pk %}">
+									<span style ="color: black;">{{review.title}} </span>
+									</a>
+								</td>
+								<td>
+									{{review.content}}
+								</td>
+								<td>
+									{{review.user}}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
-</div>
-
-
-
+	<br>
+	</div>
 {% endblock content %}
 
