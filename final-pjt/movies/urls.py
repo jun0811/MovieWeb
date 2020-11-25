@@ -6,8 +6,9 @@ app_name = 'movies'
 urlpatterns = [
     path('tmdbdata/', views.tmdbdata),
     path('', views.index, name='index'),
-    path('<int:pk>/like/', views.like, name="like"),
+    path('<int:pk>/like/', views.like, name='like'),
     path('<int:movie_pk>/', views.detail, name='detail'),
     path('<int:genre>/search/', views.search_genre, name= 'search_genre'),
     path('topratedlist/', views.topratedlist, name='topratedlist'),
+    path('search/<input>/', views.search, name='search'),
 ]

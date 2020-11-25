@@ -139,7 +139,6 @@ def like(request,pk):
         return JsonResponse(data)
 
 
-
 def youtube(title):
     url = 'https://www.googleapis.com/youtube/v3/search'
     params = {
@@ -180,3 +179,15 @@ def topratedlist(request):
     }
     return render(request, 'movies/topratedlist.html', context)
 
+
+def search(request, input):
+    movies = Movies.objects.all()
+    result = []
+    for movie in movies:
+        if input in movie.title:
+            result.append([movie.poster_path, movie.pk])
+    print(result)
+    data = {
+        'result': result,
+    }
+    return JsonResponse(data)
