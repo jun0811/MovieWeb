@@ -35,10 +35,14 @@
   color: black;
   /*font-weight: bold;*/
 }
+.div-review-style {
+  height: 36px;
+}
 .second-box {
   background-color: rgb(224, 224, 224);
   color: black;
   margin-top: 20px;
+  padding-bottom: 5px;
   border-radius: 5px;
 }
 .genre-font-style {
@@ -64,12 +68,14 @@
 }
 .font-style {
   margin-top: 5px;
+  margin-bottom: 7px;
   font-size: 18px;
   font-weight: bold;
 }
 .box-style {
   margin-top: 15px;
   margin-bottom: 15px;
+  padding-bottom: 15px;
 }
 {% endblock style %}
 
@@ -88,16 +94,16 @@
 		<div class="col-md-4 verticalLine box-style">
       <div class="font-style ml-2">나의 리뷰</div>
       {% for review in person.review_set.all %}
-        <div>
-          <a href="{% url 'community:detail' review.pk %}" class="a-review-style ml-2">{{ review.title }}</a>
+        <div class="div-review-style">
+          <a href="{% url 'community:detail' review.pk %}" class="a-review-style ml-2 p-0">{{ review.title }}</a>
           </div>
       {% endfor %}
 		</div>
 		<div class="col-md-4 verticalLine box-style">
       <div class="font-style">나의 댓글</div>
       {% for comment in person.comment_set.all %}
-        <div>
-          <a href="{% url 'community:detail' comment.review.pk %}" class="a-review-style">{{ comment.content }}</a>
+        <div class="div-review-style">
+          <a href="{% url 'community:detail' comment.review.pk %}" class="a-review-style p-0">{{ comment.content }}</a>
           </div>
       {% endfor %}      
 		</div>
