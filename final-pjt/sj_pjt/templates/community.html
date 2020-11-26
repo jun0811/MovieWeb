@@ -81,10 +81,10 @@ a:hover {
 
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
             {% if request.user.is_authenticated %}
+              <a href="{% url 'accounts:profile' user.username %}" class="mr-3 dropdown-item">My Page</a>
               <form action="{% url 'accounts:update' %}" method = "GET" class="mr-3">
-                <input type="submit" value="정보 수정" class="dropdown-item">
+                <input type="submit" value="회원정보 수정" class="dropdown-item">
               </form>
-              <a href="{% url 'accounts:profile' user.username %}" class="mr-3 pb-0 dropdown-item">프로필</a>
               <form action="{% url 'accounts:logout' %}" method="POST" class="mr-3">
                 {% csrf_token %}
                 <input type="submit" value="Logout" class="dropdown-item">
