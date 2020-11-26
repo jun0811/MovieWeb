@@ -5,6 +5,7 @@ from django.views.decorators.http import require_http_methods,require_POST
 from .forms import ReviewForm, CommentForm
 from movies.models import Movies
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -52,8 +53,9 @@ def create(request, movie_id):
     return render(request,'community/create.html', context)
 
 
-def detail(request, pk ,movie_title):
+def detail(request, pk,movie_title):
     review = get_object_or_404(Review, pk=pk)
+    # print("detail= ", movie_title)
     movie = Movies.objects.get(title=movie_title)
     comment_form = CommentForm()
     comments = review.comment_set.all()
@@ -72,12 +74,14 @@ def detail(request, pk ,movie_title):
 @require_http_methods(['GET', 'POST'])
 def update(request, pk):
     review = get_object_or_404(Review, pk=pk)
+    print("update=",review)
     # 수정하는 유저와, 게시글 작성 유저가 같은지 
     if request.method == 'POST':
         form = ReviewForm(request.POST, instance=review)
+        print(form)        
         if form.is_valid():
             form.save()
-            return redirect('community:detail', review.pk)
+            return redirect('community:detail', review.pk, review.movie_title)
     else:
         form = ReviewForm(instance=review)
     # else:
@@ -91,12 +95,12 @@ def update(request, pk):
 
 @require_POST
 def delete(request, pk):
+    review = get_object_or_404(Review, pk=pk)
     if request.user.is_authenticated:
-        review = get_object_or_404(Review, pk=pk)
         if request.user == review.user:
             review.delete()
             return redirect('community:index')
-    return redirect('community:detail', review.pk)
+    return redirect('community:detail', review.pk, review.movie_title)
 
 
 
@@ -109,7 +113,7 @@ def comments_create(request,pk):
             comment.review = review
             comment.user = request.user
             comment.save()
-            return redirect('community:detail', review.pk)
+            return redirect('community:detail', review.pk, review.movie_title )
         context = {
             'comment_form' : comment_form,
             'review':review,
@@ -120,13 +124,14 @@ def comments_create(request,pk):
 
 @require_POST
 def comments_delete(request, review_pk, comment_pk):
+    print(review_pk)
     comment = Comment.objects.get(pk=comment_pk)
-
+    review = get_object_or_404(Review, pk=review_pk)
     if request.user.is_authenticated:
         comment = get_object_or_404(Comment, pk = comment_pk)
         if request.user == comment.user:
             comment.delete()
-    return redirect('community:detail', review_pk)
+    return redirect('community:detail', review_pk, review.movie_title )
 
 
 # @require_POST

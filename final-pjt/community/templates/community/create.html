@@ -14,9 +14,9 @@
           <input type="text" name="title" maxlength="100" required="" 
           style="width:400px" id="id_title" class="form-control"></p>
           <!-- REAMD ME -->
-          <p><label for="id_movie_title">Movie:</label>
+            <label for="id_movie_title">Movie:</label>
             <span>{{movie.title}}</span>
-            <input type="hidden" id="id_movie_title" name = "movie_title" value="{{movie.title}}"></input>
+            <input type="hidden" id="id_movie_title" name="movie_title" value="{{movie.title}}"></input>
         </div>
         <div class="form-group">
           <label for="id_rate">평점</label>
@@ -31,9 +31,9 @@
         <div class="form-group">
           <p><label for="id_content">Content:</label> 
           <br>
-          <textarea name="content" cols="40" rows="10" required="" id="id_content"></textarea></p>
+          <textarea name="content" style="border: none; border-radius: 8px; font-size: 24px; font-family: Consolas, sans-serif;" cols="40" rows="10" required="" id="id_content"></textarea></p>
         </div>
-      <button type="submit" class="btn btn-info mb-2 ml-auto mr-0">Confirm</button>
+      <button type="submit" class="btn btn-info mb-4 ml-auto mr-0">Confirm</button>
 
         </div>
       </div>
