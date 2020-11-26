@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
 
+
+{% block style %}
+.container-style {
+  margin-top: 100px;
+}
+{% endblock style %}
+
+
 {% block content %}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
-<div class="container col-4">
+<div class="container col-4 container-style">
     <div class="card card-login mx-auto text-center bg-dark">
         <div class="card-header mx-auto bg-dark">
         <i class="fas fa-sign-in-alt"></i>

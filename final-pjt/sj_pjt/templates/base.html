@@ -15,6 +15,7 @@ body {
   color: white;
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 2rem;
+  padding-top: 60px;
 }
 a {
   color: white;
@@ -66,7 +67,7 @@ a:hover {
 {% endblock style %}
 </style>
 <body>
-  <nav class="nav-style navbar navbar-expand-lg">
+  <nav class="nav-style navbar navbar-expand-lg fixed-top">
     <img src="{% static 'sj_pjt/images/logo3.png' %}" alt="logo" class="logo-style">
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -75,7 +76,7 @@ a:hover {
           <a class="nav-link" href="{% url 'movies:index' %}">Home</a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'community:index' %}">Community</a>
+          <a class="nav-link" href="{% url 'community:reviews' %}">Community</a>
         </li>
       </ul>
 

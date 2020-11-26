@@ -6,6 +6,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .models import User
+from community.models import Review
 from django.views.decorators.http import require_POST, require_http_methods
 # from ..movies.models import Genre
 from .forms import CustomUserCrationForm, CustomUserChangeForm
@@ -50,7 +51,6 @@ def login(request):
 @login_required
 def profile(request, username):
     person = get_object_or_404(User, username=username)
-    # print(person)
     like_movies = []
     like_genres = []
 

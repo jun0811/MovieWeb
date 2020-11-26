@@ -26,7 +26,7 @@
 {% endblock style %}
 
 {% block content %}
-	<div class="ml-5 col-md-9 bg-dark" style= "border: none; border-radius: 8px;">
+	<div class="ml-5 col-md-9 bg-dark pt-5" style= "border: none; border-radius: 8px;">
 	
   <div class= "reviews d-flex justify-content-between">
 	<br>
@@ -35,7 +35,8 @@
 	</div>
 
 	<!-- modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	{% comment %} <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> {% endcomment %}
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">

@@ -30,6 +30,9 @@
   #id_content{
     height:35px;
   }
+  a {
+    text-decoration: none;
+  }
 {% endblock  %}
 {% block content %}
   <div class="ml-5 col-md-8 bg-dark" style= "border: none; border-radius: 8px;">
@@ -38,17 +41,17 @@
   <hr>
   <h1 class = "d-flex justify-content-center" >{{ review.title}}</h1>
   <hr>
-    <p id="info" class="d-flex justify-content-end"><i class="far fa-calendar-alt">{{ review.created_at|date:"D d M Y" }}</i></p>
-    <p id="info" class="d-flex justify-content-end"> <i class="far fa-user"> <span>글쓴이: </span>{{ user }}</i></p>
+    <p id="info" class="d-flex justify-content-end mx-5"><i class="far fa-calendar-alt">{{ review.created_at|date:"D d M Y" }}</i></p>
+    <p id="info" class="d-flex justify-content-end mx-5"> <i class="far fa-user"> <span>글쓴이: </span>{{ user }}</i></p>
     {% if comments|length %}
-      <p id="info" class="d-flex justify-content-end"><i class="far fa-comment"> {{comments|length}}개의 댓글이 있습니다.</i></p>
+      <p id="info" class="d-flex justify-content-end mx-5"><i class="far fa-comment"> {{comments|length}}개의 댓글이 있습니다.</i></p>
     {% else %}
-      <p id="info" class="d-flex justify-content-end"><i class="far fa-comment"> 0개의 댓글이 있습니다.</i></p>
+      <p id="info" class="d-flex justify-content-end mx-5"><i class="far fa-comment"> 0개의 댓글이 있습니다.</i></p>
       
     {% endif %}
   <hr>
   <div class = "mx-5 ">
-   🎬 <p class="mb-0 text-monospace "> <a href="{%url 'movies:detail' movie.pk%}">{{review.movie_title}}</a></p>
+   🎬 <p class="mb-0 text-monospace "> <a href="{%url 'movies:detail' movie.pk%}" style="text-decoration: none;">{{review.movie_title}}</a></p>
    <span>평점:</span>  
     {% for n in rate %}
       <span>⭐</span>
@@ -57,7 +60,7 @@
   </div>
     <hr>
   <div class = "d-flex ">
-    <div id="content" class=" text-white ">
+    <div id="content" class="text-white mx-5">
       <br>
       <div> {{ review.content }}</div>
     </div>
@@ -67,20 +70,20 @@
   <!--버튼-->
   <div class ="d-flex justify-content-around">
     {% if request.user == review.user %}
-      <a class="d-flex align-items-center" href="{%url 'community:update' review.pk%}">
+      <a class="d-flex align-items-center" style="text-decoration: none;" href="{%url 'community:update' review.pk%}">
       <i class="mr-3 fas fa-pen-square "></i></a>
       <form class="d-flex align-items-center"  id ="buttons" action="{% url 'community:delete' review.pk %}" method="POST">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger btn-circle  "><i class="fas fa-trash-alt"></i></button>
       </form>
     {% endif %}
-    <a class="d-flex align-items-center" href="{%url 'community:reviews'%}"><i class="fas fa-arrow-circle-left"></i></a>
+    <a class="d-flex align-items-center" href="{%url 'community:reviews'%}" style="text-decoration: none;"><i class="fas fa-arrow-circle-left"></i></a>
   </div>
   <hr>
   <!-- 댓글-->
 
   <!-- 리뷰 내용 끝-->
-<h4 style="font-size:18px;"><댓글></h4>
+<h4 style="font-size:18px;" class="mx-5"><댓글></h4>
 <hr>  
 {% for comment in comments %}
   <div>
@@ -94,18 +97,18 @@
       {% endif %}
   </div>
       {% empty %}
-    <p style="font-size:15px;">댓글이 아직 없어요...</p>
+    <p style="font-size:15px;" class="mx-5">댓글이 아직 없어요...</p>
   {% endfor %}
   <hr>
-  <h4 style="font-size:18px;">댓글 작성</h4>
+  <h4 style="font-size:18px;" class="mx-5">댓글 작성</h4>
   {% if request.user.is_authenticated %}
-    <form action="{% url 'community:comments_create' review.pk %}" method="POST">
+    <form action="{% url 'community:comments_create' review.pk %}" method="POST" class="mx-5">
       {% csrf_token %}
       <input name="content" cols="40" rows="10" required="" id="id_content" ></input>
       <button id="submit" name="submit" type="submit" class="btn btn-success mb-2">Submit</button>
     </form>
   {% else %}
-    <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인 하세요.]</a>
+    <a href="{% url 'accounts:login' %}" style="font-size:18px; text-decoration: none;" class="mx-5">❗ 댓글을 작성하려면 로그인 하세요.</a>
   {% endif %}
   </div>
 

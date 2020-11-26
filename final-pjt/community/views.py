@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Review,Comment
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods,require_POST
 from .forms import ReviewForm, CommentForm
 from movies.models import Movies
@@ -23,10 +24,10 @@ def reviews(request):
     return render(request, 'community/reviews.html',context)
 
 
-# @login_required
+@login_required
 @require_http_methods(['GET', 'POST'])
-def create(request,movie_id):
-    movie = get_object_or_404(Movies,movie_id=movie_id)
+def create(request, movie_id):
+    movie = get_object_or_404(Movies, movie_id=movie_id)
 
     if request.method =='POST':
         print(movie.title)
@@ -40,15 +41,15 @@ def create(request,movie_id):
             # 데이터 모델링에서 user를 넣어놔서 
             # user필드가 비게되면 오류가 뜨기 때문에 accounts기능을 먼저 
             # 구현하거나 모델링을 수정해가면 할 필요가 있음...
-            return redirect('community:index') # 추후에 detail로 수정필요 
+            return redirect('community:detail', review.pk, movie.title) # 추후에 detail로 수정필요 
     else:
         form = ReviewForm()
-        movie = get_object_or_404(Movies,movie_id=movie_id)
+        movie = get_object_or_404(Movies, movie_id=movie_id)
     context = {
         'form' : form ,
         'movie' : movie,
     }
-    return render(request,'community/create.html',context)
+    return render(request,'community/create.html', context)
 
 
 def detail(request, pk ,movie_title):
@@ -67,7 +68,7 @@ def detail(request, pk ,movie_title):
     return render(request, 'community/detail.html', context)
 
 
-# @login_required
+@login_required
 @require_http_methods(['GET', 'POST'])
 def update(request, pk):
     review = get_object_or_404(Review, pk=pk)
