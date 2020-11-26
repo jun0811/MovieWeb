@@ -35,7 +35,7 @@
   }
 {% endblock  %}
 {% block content %}
-  <div class="ml-5 col-md-8 bg-dark" style= "border: none; border-radius: 8px;">
+  <div class="ml-5 col-md-8 bg-dark pb-4" style= "border: none; border-radius: 8px;">
   <br>
   <!-- 리뷰 내용-->
   <hr>
@@ -51,7 +51,7 @@
     {% endif %}
   <hr>
   <div class = "mx-5 ">
-   🎬 <p class="mb-0 text-monospace "> <a href="{%url 'movies:detail' movie.pk%}" style="text-decoration: none;">{{review.movie_title}}</a></p>
+   <p class="mb-0"> <a href="{% url 'movies:detail' movie.pk%}" style="text-decoration: none;">🎬 {{review.movie_title}}</a></p>
    <span>평점:</span>  
     {% for n in rate %}
       <span>⭐</span>
@@ -87,28 +87,28 @@
 <hr>  
 {% for comment in comments %}
   <div>
-    <p id ="user"> {{ comment.user }} </p>
-    <p id ="comment">{{ comment.content }}</p>
+    <p id ="user" class="ml-5 mb-0 mt-3"> {{ comment.user }} </p>
+    <span id ="comment" class="ml-5">{{ comment.content }}</span>
      {% if request.user == comment.user %}
         <form action="{% url 'community:comments_delete' review.pk comment.pk %}" method="POST" class="d-inline">
           {% csrf_token %}
-          <button type="submit" class="btn btn-danger btn-circle"><i class="fas fa-trash-alt"></i></button>
+          <button type="submit" class="btn btn-dark btn-circle"><i class="fas fa-trash-alt" style="font-size: 13px;"></i></button>
         </form> 
       {% endif %}
   </div>
       {% empty %}
-    <p style="font-size:15px;" class="mx-5">댓글이 아직 없어요...</p>
+    <p style="font-size:15px;" class="ml-5">댓글이 아직 없어요...</p>
   {% endfor %}
   <hr>
-  <h4 style="font-size:18px;" class="mx-5">댓글 작성</h4>
+  <h4 style="font-size:18px;" class="ml-5">댓글 작성</h4>
   {% if request.user.is_authenticated %}
     <form action="{% url 'community:comments_create' review.pk %}" method="POST" class="mx-5">
       {% csrf_token %}
-      <input name="content" cols="40" rows="10" required="" id="id_content" ></input>
-      <button id="submit" name="submit" type="submit" class="btn btn-success mb-2">Submit</button>
+      <input name="content" cols="40" rows="10" required="" id="id_content" style="font-size:13px;"></input>
+      <button id="submit" name="submit" type="submit" class="btn btn-outline-light">Submit</button>
     </form>
   {% else %}
-    <a href="{% url 'accounts:login' %}" style="font-size:18px; text-decoration: none;" class="mx-5">❗ 댓글을 작성하려면 로그인 하세요.</a>
+    <a href="{% url 'accounts:login' %}" style="font-size:18px; text-decoration: none;" class="ml-5">❗ 댓글을 작성하려면 로그인 하세요.</a>
   {% endif %}
   </div>
 
