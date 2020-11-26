@@ -103,7 +103,7 @@
       <div class="font-style">나의 댓글</div>
       {% for comment in person.comment_set.all %}
         <div class="div-review-style">
-          <a href="{% url 'community:detail' comment.review.pk %}" class="a-review-style p-0">{{ comment.content }}</a>
+          <a href="{% url 'community:detail' comment.review.pk comment.review.movie_title %}" class="a-review-style p-0">{{ comment.content }}</a>
           </div>
       {% endfor %}      
 		</div>
