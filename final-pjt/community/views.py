@@ -56,11 +56,13 @@ def detail(request, pk ,movie_title):
     movie = Movies.objects.get(title=movie_title)
     comment_form = CommentForm()
     comments = review.comment_set.all()
+    # print(review.rate)
     context = {
         'review': review,
         'comment_form': comment_form,
         'comments': comments,
         'movie' : movie,
+        'rate' : range(review.rate),
     }
     return render(request, 'community/detail.html', context)
 

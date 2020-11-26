@@ -33,11 +33,10 @@
 {% endblock  %}
 {% block content %}
   <div class="ml-5 col-md-8 bg-dark" style= "border: none; border-radius: 8px;">
-  <a href="{%url 'community:reviews'%}"><h1>[리뷰]</h1></a>
   <br>
   <!-- 리뷰 내용-->
   <hr>
-  <h1 class = "d-flex justify-content-center " >{{ review.title}}</h1>
+  <h1 class = "d-flex justify-content-center" >{{ review.title}}</h1>
   <hr>
     <p id="info" class="d-flex justify-content-end"><i class="far fa-calendar-alt">{{ review.created_at|date:"D d M Y" }}</i></p>
     <p id="info" class="d-flex justify-content-end"> <i class="far fa-user"> <span>글쓴이: </span>{{ user }}</i></p>
@@ -49,7 +48,12 @@
     {% endif %}
   <hr>
   <div class = "mx-5 ">
-   <i class="fas fa-video"></i> MOVIE<p class="mb-0 text-monospace "> <a href="{%url 'movies:detail' movie.pk%}">{{review.movie_title}}</a></p>
+   🎬 <p class="mb-0 text-monospace "> <a href="{%url 'movies:detail' movie.pk%}">{{review.movie_title}}</a></p>
+   <span>평점:</span>  
+    {% for n in rate %}
+      <span>⭐</span>
+      {% comment %} <i class="fas fa-star"></i> {% endcomment %}
+    {% endfor %}
   </div>
     <hr>
   <div class = "d-flex ">
@@ -69,15 +73,14 @@
         {% csrf_token %}
         <button type="submit" class="btn btn-danger btn-circle  "><i class="fas fa-trash-alt"></i></button>
       </form>
-      
     {% endif %}
-    <a class="d-flex align-items-center" href="{%url 'community:index'%}"><i class="fas fa-arrow-circle-left"></i></a>
+    <a class="d-flex align-items-center" href="{%url 'community:reviews'%}"><i class="fas fa-arrow-circle-left"></i></a>
   </div>
   <hr>
   <!-- 댓글-->
 
   <!-- 리뷰 내용 끝-->
-<h4><댓글></h4>
+<h4 style="font-size:18px;"><댓글></h4>
 <hr>  
 {% for comment in comments %}
   <div>
@@ -91,10 +94,10 @@
       {% endif %}
   </div>
       {% empty %}
-    <p>댓글이 아직 없어요...</p>
+    <p style="font-size:15px;">댓글이 아직 없어요...</p>
   {% endfor %}
   <hr>
-  <h4>댓글 작성</h4>
+  <h4 style="font-size:18px;">댓글 작성</h4>
   {% if request.user.is_authenticated %}
     <form action="{% url 'community:comments_create' review.pk %}" method="POST">
       {% csrf_token %}
