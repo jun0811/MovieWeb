@@ -26,14 +26,18 @@ def reviews(request):
 # @login_required
 @require_http_methods(['GET', 'POST'])
 def create(request,movie_id):
+    movie = get_object_or_404(Movies,movie_id=movie_id)
+
     if request.method =='POST':
+        print(movie.title)
+        print(request.POST)
         form = ReviewForm(request.POST)
-        print(form)
+        # print(form)
         if form.is_valid():
             review = form.save(commit=False) # 당장 저장하지 않고 user 등록후 저장 
             review.user = request.user # accounts기능 완료후 필요 
             review.save()
-            ## 데이터 모델링에서 user를 넣어놔서 
+            # 데이터 모델링에서 user를 넣어놔서 
             # user필드가 비게되면 오류가 뜨기 때문에 accounts기능을 먼저 
             # 구현하거나 모델링을 수정해가면 할 필요가 있음...
             return redirect('community:index') # 추후에 detail로 수정필요 
@@ -47,14 +51,16 @@ def create(request,movie_id):
     return render(request,'community/create.html',context)
 
 
-def detail(request, pk):
+def detail(request, pk ,movie_title):
     review = get_object_or_404(Review, pk=pk)
+    movie = Movies.objects.get(title=movie_title)
     comment_form = CommentForm()
     comments = review.comment_set.all()
     context = {
         'review': review,
         'comment_form': comment_form,
         'comments': comments,
+        'movie' : movie,
     }
     return render(request, 'community/detail.html', context)
 
