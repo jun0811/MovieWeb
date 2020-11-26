@@ -48,7 +48,8 @@
     {% endif %}
   <hr>
   <div class = "mx-5 ">
-   🎬 <p class="mb-0 text-monospace "> <a href="{%url 'movies:detail' movie.pk%}">{{review.movie_title}}</a></p>
+   🎬 <span class="mb-0 text-monospace "> <a href="{%url 'movies:detail' movie.pk%}">{{review.movie_title}}</a></span>
+   <br>
    <span>평점:</span>  
     {% for n in rate %}
       <span>⭐</span>
@@ -67,7 +68,7 @@
   <!--버튼-->
   <div class ="d-flex justify-content-around">
     {% if request.user == review.user %}
-      <a class="d-flex align-items-center" href="{%url 'community:update' review.pk%}">
+      <a class="d-flex align-items-center" href="{% url 'community:update' review.pk %}">
       <i class="mr-3 fas fa-pen-square "></i></a>
       <form class="d-flex align-items-center"  id ="buttons" action="{% url 'community:delete' review.pk %}" method="POST">
         {% csrf_token %}
