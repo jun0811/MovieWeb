@@ -5,6 +5,10 @@
 .container-style {
   margin-top: 100px;
 }
+.login-text-style {
+    font-size: 15px;
+    padding-top: 0;
+}
 {% endblock style %}
 
 
@@ -33,7 +37,8 @@
                     </div>
                     <input type="password" name="password" class="form-control" placeholder="Password">
                 </div>
-                    <input type="submit" name="btn" value="Login" class="btn btn-outline-success float-right login_btn">
+                <a href="{% url 'accounts:signup' %}" class="login-text-style d-flex justify-content-start" style="text-decoration: none">아직 회원이 아니신가요?</a>
+                    <input type="submit" name="btn" value="Login" class="btn btn-outline-light float-right login_btn">
             </form>
         </div>
     </div>
