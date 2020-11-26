@@ -191,11 +191,9 @@ a:hover{
     const searchBtn = document.querySelector('#searchBtn')
 
     function search () {
-      const csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
-      const options = { headers: {'X-CSRFToken': csrfToken}}      
       const URL = `/movies/search/${searchInput.value}/`
 
-      axios.post(URL, {}, options)
+      axios.get(URL)
       .then(function (res) {
         const resultArray = res.data.result
         const searchResult = document.querySelector('#searchResult')
