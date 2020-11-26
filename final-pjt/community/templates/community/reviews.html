@@ -14,7 +14,7 @@
 {% endblock style %}
 
 {% block content %}
-	<div class="ml-5 col-md-9 bg-dark">
+	<div class="ml-5 col-md-9 bg-dark" style= "border: none; border-radius: 8px;">
 	
   <div class= "reviews d-flex justify-content-between"> 
   <h1>Reviews</h1>
@@ -68,7 +68,7 @@
 									{{review.pk}}
 								</td>
 								<td>
-									<a  href="{%url "community:detail" review.pk %}">
+									<a  href="{%url "community:detail" review.pk review.movie_title%}">
 									<span style ="color: black;">{{review.title}} </span>
 									</a>
 								</td>

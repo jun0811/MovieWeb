@@ -7,7 +7,11 @@ urlpatterns = [
     path('',views.index, name="index"),
     path('reviews/',views.reviews, name="reviews"), 
     path('create/<movie_id>/',views.create, name="create"),
+<<<<<<< HEAD
     path('<int:pk>/',views.detail, name="detail"),
+=======
+    path('<int:pk>/<movie_title>/',views.detail, name="detail"),
+>>>>>>> modify
     path('<int:pk>/update/',views.update, name="update"),
     path('<int:pk>/delete/',views.delete, name="delete"),
     path('<int:pk>/comments/', views.comments_create, name='comments_create'),
