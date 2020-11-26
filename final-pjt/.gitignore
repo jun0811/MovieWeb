@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/django,windows,venv,macos,vscode
-# Edit at https://www.toptal.com/developers/gitignore?templates=django,windows,venv,macos,vscode
+# Created by https://www.toptal.com/developers/gitignore/api/venv,macos,windows,vscode,django
+# Edit at https://www.toptal.com/developers/gitignore?templates=venv,macos,windows,vscode,django
 
 ### Django ###
 *.log
@@ -8,6 +8,8 @@
 *.pyc
 __pycache__/
 local_settings.py
+db.sqlite3
+db.sqlite3-journal
 media
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
@@ -223,4 +225,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/django,windows,venv,macos,vscode
+# End of https://www.toptal.com/developers/gitignore/api/venv,macos,windows,vscode,django
