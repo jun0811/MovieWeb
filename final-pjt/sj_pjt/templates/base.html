@@ -68,7 +68,7 @@ a:hover {
 </style>
 <body>
   <nav class="nav-style navbar navbar-expand-lg fixed-top">
-    <img src="{% static 'sj_pjt/images/logo3.png' %}" alt="logo" class="logo-style">
+    <a href="{% url 'movies:index' %}" class="py-0"><img src="{% static 'sj_pjt/images/logo3.png' %}" alt="logo" class="logo-style"></a>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">

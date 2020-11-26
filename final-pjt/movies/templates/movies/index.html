@@ -48,7 +48,15 @@ a:hover{
   padding-right: 65px;
 }
 .margin-search {
-  margin-bottom: 150px;
+  margin-bottom: 20px;
+}
+.login-text-style {
+  font-size: 16px;
+  margin-top: 15px;
+  margin-left:15px;
+}
+.recommand-margin-style {
+  margin-top: 150px;
 }
 {% endblock style %}
 
@@ -137,7 +145,7 @@ a:hover{
 
 
 <!-- 추천 영화 시작 -->
-<div class="container my-5">
+<div class="container recommand-margin-style">
   {% if request.user.is_authenticated %}
   <h2>{{ request.user }}님에게 추천하는 영화</h2>
   <div class="row">
@@ -148,7 +156,7 @@ a:hover{
           </div>
         {% endfor %}
       {% else %}
-        <div>영화에 좋아요를 눌러주시면 영화를 추천해드립니다</div>
+        <div class="login-text-style">맘에 드는 영화에 좋아요를 눌러보세요! 추천 알고리즘으로 영화를 추천해드립니다😊</div>
       {% endif %}
     {% endif %}
   </div>
@@ -191,11 +199,9 @@ a:hover{
     const searchBtn = document.querySelector('#searchBtn')
 
     function search () {
-      const csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
-      const options = { headers: {'X-CSRFToken': csrfToken}}      
       const URL = `/movies/search/${searchInput.value}/`
 
-      axios.post(URL, {}, options)
+      axios.get(URL)
       .then(function (res) {
         const resultArray = res.data.result
         const searchResult = document.querySelector('#searchResult')
