@@ -26,11 +26,8 @@ def reviews(request):
 # @login_required
 @require_http_methods(['GET', 'POST'])
 def create(request,movie_id):
-<<<<<<< HEAD
-=======
     movie = get_object_or_404(Movies,movie_id=movie_id)
 
->>>>>>> modify
     if request.method =='POST':
         print(movie.title)
         print(request.POST)
