@@ -10,6 +10,6 @@ urlpatterns = [
     path('update/', views.update, name='update'),
     # profile이 update보다 아래에 있어야 문제가 없음 .... 
     path('password/', views.change_password, name='change_password'),
-    path('<username>/', views.profile, name='profile'),
     path('delete/', views.delete, name='delete'),
+    path('<username>/', views.profile, name='profile'),
 ]

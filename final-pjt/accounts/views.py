@@ -106,6 +106,7 @@ def update(request):
 
 @require_POST
 def delete(request):
+    print('hi')
     if request.user.is_authenticated:
         request.user.delete()
     return redirect('movies:index')
