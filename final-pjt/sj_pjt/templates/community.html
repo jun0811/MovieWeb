@@ -2,6 +2,7 @@
 <html lang="en">
 {% load static %}
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@700&display=swap" rel="stylesheet"> 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -104,22 +105,7 @@ a:hover {
   </nav> 
 
   <div class="container-fluid ">
-  <div class="row ">
-    <div class="col-md-2 ml-4 bg-white" style="height:160px; border: none; border-radius: 8px;">
-      <h4 id="point_color">REVIEW</h4>
-        <ul class="side-nav">
-            <a class="text-dark" href="{%url 'community:reviews' %}">감상 후기</a>
-            <br>
-            <a class="text-dark" href="{%url 'accounts:profile' request.user %}">나의 평점 </a>
-        </ul>
-      {% comment %} <h4 id="point_color">NEWS</h4>
-        <ul class="side-nav">
-            <a class="text-dark" href="#">정보/소식 </a>
-            <br>
-            <a class="text-dark" href="#">예고편</a>
-        </ul> {% endcomment %}
-    </div>
-
+  <div class="row  d-flex justify-content-center">
       {% block content %}
       {% endblock  %}
   </div>

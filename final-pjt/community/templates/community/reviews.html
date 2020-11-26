@@ -1,7 +1,12 @@
 {% extends 'community.html' %}
 {% block style %}
-  td, th {
+  table, td, th {
     color : dark;
+		font-size:15px;
+    font-family: 'Nanum Gothic Coding', monospace;
+		text-overflow :ellipsis;
+		oveflow: hidden;
+		white-space : nowrap;
   }
 	.reviews{
 		color:white;
@@ -11,14 +16,22 @@
 		border : 0;
 		outline : 0;
 	}
+	.reviewTable{
+		width :100%;
+		table-layout:fixed;
+	}
+	button:hover{
+		text-decoration: none;
+	}
 {% endblock style %}
 
 {% block content %}
 	<div class="ml-5 col-md-9 bg-dark" style= "border: none; border-radius: 8px;">
 	
-  <div class= "reviews d-flex justify-content-between"> 
+  <div class= "reviews d-flex justify-content-between">
+	<br>
   <h1>Reviews</h1>
-	<button id="createBtn" class="modal-button bg-dark" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-edit"></i></button>
+	<button id="createBtn" class="modal-button bg-dark" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-edit text-white"></i></button>
 	</div>
 
 	<!-- modal -->
@@ -51,14 +64,14 @@
     <hr>
 	<div class="container-fluid bg-white">
 		<div class="row ">
-			<div class="col-md-12 p-0 ">
-				<table class="table table-striped">
+			<div class="col-md-12 p-0"   >
+				<table class="table table-striped reviewTable">
 					<thead>
 						<tr style="background-color: rgb(109, 166, 155);">
-							<th>#</th>
-							<th>Title</th>
+							<th style="width:40px;">#</th>
+							<th style="width:250px;">Title</th>
 							<th>Content</th>
-							<th>Author</th>
+							<th style="width:100px;">Author</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -69,11 +82,11 @@
 								</td>
 								<td>
 									<a  href="{%url "community:detail" review.pk review.movie_title%}">
-									<span style ="color: black;">{{review.title}} </span>
+									<span style =" color: black;">{{review.title}} </span>
 									</a>
 								</td>
 								<td>
-									{{review.content}}
+									<div style = "overflow: hidden;">{{review.content}}</div>
 								</td>
 								<td>
 									{{review.user}}
@@ -129,10 +142,10 @@
 						movielist.removeChild(movielist.firstChild)
 			}
 		})
-		{% comment %} input.addEventListener('keypress', function(e){
+		input.addEventListener('keypress', function(e){
 			if (e.code ==="Enter"){
 				movieData()
 			} 
-		}){% endcomment %}
+		})
 	</script>
 {% endblock script %}

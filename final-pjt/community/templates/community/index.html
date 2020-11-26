@@ -1,17 +1,18 @@
 {% extends 'community.html' %}
+{% block style %}
+
+  p {
+    font-size:20px;
+    font-family: 'Nanum Gothic Coding', monospace;
+  }
+{% endblock style %}
+
 
 {% block content %}
-  
-  <div class="ml-5 col-md-9 bg-dark" style= "border: none; border-radius: 8px;">
+  <div class=" ml-5 col-md-8 bg-dark" style= "border: none; border-radius: 8px;">
   <div class ="d-flex raw" >
-    <div class=" col-md-6 bg-white my-3 mr-1"  style= "border: none; border-radius: 8px;">
-      <h3 class="text-dark mt-1">누군가 좋아하는 영화
-        
-      </h3>
-      <hr>
-    </div>
     <!-- -->
-    <div class=" col-md-6 bg-white my-3" style= "border: none; border-radius: 8px;">
+    <div class=" col-md-12 bg-white my-3" style= "border: none; border-radius: 8px;">
       <h3 class="text-dark mt-1">Reviews 
       <a class="text-dark" href="{% url 'community:reviews' %}">
         <i class="far fa-plus-square"></i>
@@ -19,7 +20,7 @@
       </h3>
       <hr>
         {% for review in reviews %}
-          <a class="text-dark" href="{%url 'community:detail' review.pk review.movie_title %}"><p>글 제목 : {{review.title}}</p></a>
+          <a class="text-dark" href="{%url 'community:detail' review.pk review.movie_title %}"><p>{{review.title}}</p></a>
           <hr>
         {% endfor %}
     </div>
