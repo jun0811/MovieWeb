@@ -4,7 +4,7 @@ from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from .models import Movies, Genre
-
+import random
 # Create your views here.
 def tmdbdata(request):
     BASE_API = 'https://api.themoviedb.org/3/movie/top_rated'
@@ -87,29 +87,30 @@ def index(request):
     recommand = []
     if request.user.is_authenticated:
         user = request.user
+        print(user.like_movies)
         # print(Movies.objects.all())
         for movie in user.like_movies.all():
             for genre in movie.genres.all():
                 # print(genre.id)
                 genres[str(genre.id)] +=1
-        top_2 = sorted(genres.items(), reverse=True, key= lambda x : x[1])[:2] # 선호도 가장 높은 3개
-        if top_2[0][1] != 0:
-            for i in range(2):
-                like_genres.append(top_2[i][0])
+        top_3 = sorted(genres.items(), reverse=True, key= lambda x : x[1])[:3] # 선호도 가장 높은 3개
+        if top_3[0][1] != 0:
+            for i in range(3):
+                like_genres.append(top_3[i][0])
             for movie in Movies.objects.order_by('-popularity'):
-                
+                if len(recommand) ==10:
+                    break
                 for genre in movie.genres.all():
                     # print(genre.id)  
-                    if (str(genre.id) in like_genres) and movie not in recommand:
+                    if (str(genre.id) in like_genres) and (movie not in recommand) :
                         recommand.append(movie)
-            recommand = recommand[:3]
     # recommand = list(set(recommand))[:3]
-
+    random.shuffle(recommand)
     context = {
         'first': first,
         'second': second,
         'third': third,
-        'recommand': recommand
+        'recommand': recommand[:3]
     }
     return render(request, 'movies/index.html', context)
 
