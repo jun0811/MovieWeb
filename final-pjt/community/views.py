@@ -99,7 +99,7 @@ def delete(request, pk):
     if request.user.is_authenticated:
         if request.user == review.user:
             review.delete()
-            return redirect('community:index')
+            return redirect('community:reviews')
     return redirect('community:detail', review.pk, review.movie_title)
 
 
