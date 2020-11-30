@@ -1,5 +1,9 @@
 # README
 
+```bash
+localhost:8000/movies/tmdbdata/ 를 통해 db데이터를 입력할 수 있습니다.
+```
+
 
 
 ## 데이터 수집 및 가공 
@@ -115,4 +119,34 @@
 
   ### 커뮤니티 기능
 
-  
+  ![](README.assets/1-1606669942702.PNG)
+
+![](README.assets/2-1606669950404.PNG)
+
+- Modal 기능을 사용하여 검색기능을 통한 글 작성
+
+```python
+# @require_POST
+def search_title(request, title):
+    print(title)
+    movies = Movies.objects.filter(title__contains=title)
+    # print(movies.object.all())
+    data = {
+        "movies" :movies
+    }
+    return JsonResponse(list(movies.values()),safe=False)
+
+```
+
+- 또한 댓글 작성 및 글 삭제 수정 기능을 더했다. 
+- 아쉬운점⚡ : 댓글 수정기능이 생각보다 쉽지 않았다. Javascript를 활용하여 페이지 리로드 없이 할려고 했지만 잘되지 않아 기능을 뺴고 프로젝트를 수행했다. 추후 댓글 수정 기능을 넣을 것이다.
+
+
+
+---
+
+## 느낀점 🚗
+
+- 풀스텍으로 ERD부터 css까지 하면서 부족한점을 많이 느꼈다.
+- 사이트를 만들어보면서 사이트에 기능을 만들 때마다 부족함을 찾고 개선하면서 많이 배울수 있었다.
+- javascript와 css를 더 공부해서 멋진 web을 만들고 싶다는 욕심이 생겼다.🌊
