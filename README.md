@@ -1,10 +1,21 @@
 # README
 
+![](https://img.shields.io/badge/vue-2.0-red)![](https://img.shields.io/badge/django-3.1-green)
+
+# 0. 프로젝트
+
+### 목표.
+
+1. 영화 정보 수집
+2. 데이터 베이스 구축 
+3. Django 만으로 프로젝트 완성
+4. 영화 추천 알고리즘
+
+
+
 ```bash
 localhost:8000/movies/tmdbdata/ 를 통해 db데이터를 입력할 수 있습니다.
 ```
-
-
 
 ## 데이터 수집 및 가공 
 
